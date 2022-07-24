@@ -1,0 +1,111 @@
+@font-face {
+    font-family: 'Hero New Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New Regular'), url('../../src/assets/fonts/Hero New Regular.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New Regular Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New Regular Italic'), url('../../src/assets/fonts/Hero New Regular Italic.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New Thin';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New Thin'), url('../../src/assets/fonts/Hero New Thin.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New Thin Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New Thin Italic'), url('../../src/assets/fonts/Hero New Thin Italic.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New UltraLight';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New UltraLight'), url('../../src/assets/fonts/Hero New UltraLight.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New UltraLight Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New UltraLight Italic'), url('../../src/assets/fonts/Hero New UltraLight Italic.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New Light';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New Light'), url('../../src/assets/fonts/Hero New Light.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New Light Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New Light Italic'), url('../../src/assets/fonts/Hero New Light Italic.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New Medium';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New Medium'), url('../../src/assets/fonts/Hero New Medium.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New Medium Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New Medium Italic'), url('../../src/assets/fonts/Hero New Medium Italic.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New SemiBold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New SemiBold'), url('../../src/assets/fonts/Hero New SemiBold.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New SemiBold Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New SemiBold Italic'), url('../../src/assets/fonts/Hero New SemiBold Italic.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New Bold'), url('../../src/assets/fonts/Hero New Bold.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New Bold Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New Bold Italic'), url('../../src/assets/fonts/Hero New Bold Italic.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New ExtraBold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New ExtraBold'), url('../../src/assets/fonts/Hero New ExtraBold.otf'), format('woff');
+}
+
+@font-face {
+    font-family: 'Hero New ExtraBold Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Hero New ExtraBold Italic'), url('../../src/assets/fonts/Hero New ExtraBold Italic.otf'), format('woff');
+}
