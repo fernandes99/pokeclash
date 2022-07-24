@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setBattleLog } from "../../store/reducers/battleLogs";
 import { setCurrentHpPokemonAllied } from "../../store/reducers/pokemonAllied";
-import { setCurrentHpPokemonEnemy } from "../../store/reducers/pokemonEnemy";
+import { setCaptureRatePokemonEnemy, setCurrentHpPokemonEnemy } from "../../store/reducers/pokemonEnemy";
 import { colors } from "../../utils/colors";
 import { getPercentage, getRandomIntFromInterval } from "../../utils/general";
 import { requests } from "../../utils/requests";
@@ -28,14 +28,11 @@ export const Pokemon = (props: any) => {
 
     const attack = (target: 'enemy' | 'allied', move: any) => {
         requests.get.move(move.name).then(async res => {
+            let type = await requests.get.type(res.type.name);
+
             if (!res.power) res.power = 10;
 
             if (target === 'enemy') {
-                
-                let type = await requests.get.type(res.type.name);
-
-                console.log('ALIADO', multiplicatorType(target, type));
-
                 let damage = res.power / 1.5 + (allied.level) * multiplicatorType(target, type);
                     damage = getRandomIntFromInterval(damage - (damage / 2), damage + (damage / 2));
 
@@ -49,10 +46,6 @@ export const Pokemon = (props: any) => {
             }
 
             if (target === 'allied') {
-                let type = await requests.get.type(res.type.name);
-
-                console.log('INIMIGO', multiplicatorType(target, type));
-
                 let damage = res.power / 1.5 + (enemy.level) * multiplicatorType(target, type);
                     damage = getRandomIntFromInterval(damage - (damage / 2), damage + (damage / 2));
 
@@ -65,9 +58,20 @@ export const Pokemon = (props: any) => {
         });
     } // NEED REFACT
 
+    const updateRate = () => {
+        if (enemy.status?.hp_percentage <= 5) return dispatch(setCaptureRatePokemonEnemy(enemy.capture_rate * 2));
+        if (enemy.status?.hp_percentage <= 20) return dispatch(setCaptureRatePokemonEnemy(enemy.capture_rate * 1.5));
+        if (enemy.status?.hp_percentage <= 50) return dispatch(setCaptureRatePokemonEnemy(enemy.capture_rate * 1.2));
+        if (enemy.status?.hp_percentage <= 90) return dispatch(setCaptureRatePokemonEnemy(enemy.capture_rate * 1.05));
+    }
+
     useEffect(() => {
         setPokemon(props.data);
     }, [props.data]);
+
+    useEffect(() => {
+        updateRate();
+    }, [enemy.status.hp_percentage]);
 
     return (
         <>
@@ -84,7 +88,7 @@ export const Pokemon = (props: any) => {
                     <LifeBar
                         full={pokemon.status?.hp_total}
                         current={pokemon.status?.hp_current}
-                        percentage={getPercentage(pokemon.status?.hp_current, pokemon.status?.hp_total)}
+                        percentage={pokemon.status?.hp_percentage}
                     />
 
                     {!props.isSmall &&

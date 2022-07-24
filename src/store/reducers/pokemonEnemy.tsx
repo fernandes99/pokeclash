@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getPercentage } from "../../utils/general";
 import { mocks } from "../../utils/mocks";
 
 const pokemonEnemy = createSlice({
@@ -20,11 +21,16 @@ const pokemonEnemy = createSlice({
             Object.assign(state, action.payload)
         },
 
+        setCaptureRatePokemonEnemy (state: any, action: any) {
+            state.capture_rate = action.payload;
+        },
+
         setCurrentHpPokemonEnemy (state: any, action: any) {
             state.status.hp_current = action.payload;
+            state.status.hp_percentage = getPercentage(action.payload, state.status.hp_total);
         }
     }
 })
 
-export const { setPokemonEnemy, updatePokemonEnemy, setCurrentHpPokemonEnemy } = pokemonEnemy.actions;
+export const { setPokemonEnemy, updatePokemonEnemy, setCurrentHpPokemonEnemy, setCaptureRatePokemonEnemy } = pokemonEnemy.actions;
 export default pokemonEnemy.reducer;

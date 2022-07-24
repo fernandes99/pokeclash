@@ -8,5 +8,18 @@ export const Stats = styled.div`
         span:first-child {
             color: #737373;
         }
+
+        button {
+            color: #3C90F5;
+            text-decoration: underline;
+            padding: 0;
+            text-align: left;
+            cursor: pointer;
+
+            &:disabled {
+                color: #979797;
+                cursor: no-drop;
+            }
+        }
     }
 `

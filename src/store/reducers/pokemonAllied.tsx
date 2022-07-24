@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getPercentage } from "../../utils/general";
 import { mocks } from "../../utils/mocks";
 
 const pokemonAllied = createSlice({
@@ -22,6 +23,7 @@ const pokemonAllied = createSlice({
 
         setCurrentHpPokemonAllied (state: any, action: any) {
             state.status.hp_current = action.payload;
+            state.status.hp_percentage = getPercentage(action.payload, state.status.hp_total);
         }
     }
 })

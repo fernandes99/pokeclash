@@ -24,3 +24,7 @@ export const getPercentage = (current: number, total: number) => {
     const result = parseFloat(Math.round((current / total) * 100).toFixed(2));
     return result;
 }
+
+export const pkmRateInPercentage = (rate: number) => {
+	return parseFloat(((100 * rate) / 255).toFixed(2));
+}

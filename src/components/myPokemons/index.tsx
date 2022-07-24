@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useDispatch } from "react-redux";
 import { setPokemonAllied } from "../../store/reducers/pokemonAllied";
 import { colors } from "../../utils/colors";
 import { Box, Info, Small, Text, Image } from "./styles";
 
 export const MyPokemons = (props: any) => {
     const dispatch = useDispatch();
-    const global = useSelector((state: RootState) => state.global);
     const [ pokemons, setPokemons ] = useState(props.data);
 
     const handleSelect = (pkm: any) => {
@@ -18,6 +16,7 @@ export const MyPokemons = (props: any) => {
 
     useEffect(() => {
         setPokemons(props.data);
+        console.log(props.data);
     }, [props.data])
 
     return (

@@ -8,10 +8,9 @@ import { MyPokemons } from "../../components/myPokemons";
 import { Pokemon } from "../../components/pokemon"
 import { Statistics } from "../../components/statistics";;
 import { RootState } from "../../store";
-import { setPokemonAllied } from "../../store/reducers/pokemonAllied";
 import { setPokemonEnemy } from "../../store/reducers/pokemonEnemy";
 import { setUserData } from "../../store/reducers/user";
-import { getRandomIntFromInterval } from "../../utils/general";
+import { capitalize, getRandomIntFromInterval, pkmRateInPercentage } from "../../utils/general";
 import { requests } from "../../utils/requests";
 import { storage } from "../../utils/storage";
 import { ExploreBlock, SelectPokemonToBattle } from "./components/general";
@@ -34,9 +33,8 @@ export const HomePage = () => {
         else navigate('/bemvindo');
     }
 
-    const setPokemon = async (team: string) => {
-        const alliedPkm = team === 'allied' ? 'charmander' : undefined;
-        let base = await requests.get.pokemon(alliedPkm);
+    const setEnemy = async () => {
+        let base = await requests.get.pokemon();
         let pokemon = await requests.get.specie(base.id);
 
         pokemon = {
@@ -47,21 +45,30 @@ export const HomePage = () => {
 
         let randomMove = getRandomIntFromInterval(0, pokemon.moves.length - 1);
 
-        pokemon.level = team === 'allied' ? 5 : getRandomIntFromInterval(1, 10);
+        pokemon.name = capitalize(pokemon.name);
+        pokemon.level = getRandomIntFromInterval(1, 10);
         pokemon.image = base.sprites.front_default;
         pokemon.moves = pokemon.moves.slice(randomMove, randomMove + 4);
         pokemon.status.hp_total = parseInt(pokemon.stats[0].base_stat + ((pokemon.stats[0].base_stat * 0.1) * pokemon.level));
         pokemon.status.hp_current = pokemon.status.hp_total;
+        pokemon.status.hp_percentage = 100;
+        pokemon.xp = {}
+        pokemon.xp.base = pokemon.base_experience;
+        pokemon.xp.next_level = pokemon.xp.base * pokemon.level;
+        pokemon.xp.current = getRandomIntFromInterval(0, pokemon.base_experience);
+        pokemon.capture_rate = pkmRateInPercentage(pokemon.capture_rate);
 
-        if (team === 'enemy') return dispatch(setPokemonEnemy(pokemon));
-        if (team === 'allied') return dispatch(setPokemonAllied(pokemon));
+        dispatch(setPokemonEnemy(pokemon));
     }
 
     useEffect(() => {
         auth();
-        setPokemon('enemy');
-        // setPokemon('allied');
+        setEnemy();
     }, [])
+
+    useEffect(() => {
+        storage.set('user', user);
+    }, [user]);
 
     return (
         <>

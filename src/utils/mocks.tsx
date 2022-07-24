@@ -9,12 +9,17 @@ export const mocks = {
         color: '',
         moves: [],
         types: [],
+        capture_rate: 0,
+        xp: {
+            base: 0,
+            current: 0,
+            next_level: 0
+        },
         status: {
             hp_total: 0,
             hp_current: 0,
-        },
-        xp: 0,
-        nextXpLevel: 0,
+            hp_percentage: 0,
+        }
     } as any, // TODO Type
 
     user: {

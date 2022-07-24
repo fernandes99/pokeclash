@@ -9,7 +9,7 @@ import { Box, Form, Input, Text, Title, ChoiceBox, Choice } from "./styles"
 import { resetUserData, setUserData, setUserName, setUserNewPokemon } from "../../store/reducers/user"
 import { useEffect, useState } from "react"
 import { requests } from "../../utils/requests"
-import { getRandomIntFromInterval } from "../../utils/general"
+import { getRandomIntFromInterval, getRandomValue, pkmRateInPercentage } from "../../utils/general"
 
 export const WelcomePage = () => {
     const navigate = useNavigate();
@@ -52,9 +52,15 @@ export const WelcomePage = () => {
         pokemon.moves = pokemon.moves.slice(randomMove, randomMove + 4);
         pokemon.status.hp_total = parseInt(pokemon.stats[0].base_stat + ((pokemon.stats[0].base_stat * 0.1) * pokemon.level));
         pokemon.status.hp_current = pokemon.status.hp_total;
+        pokemon.status.hp_percentage = 100;
+        pokemon.xp = {}
+        pokemon.xp.base = pokemon.base_experience;
+        pokemon.xp.next_level = pokemon.xp.base * pokemon.level;
+        pokemon.xp.current = getRandomIntFromInterval(0, pokemon.base_experience);
+        pokemon.capture_rate = pkmRateInPercentage(pokemon.capture_rate);
 
         const userData = {
-            id: 123,
+            id: getRandomValue(),
             name: user.name,
             items: {
                 pokeballs: 5,

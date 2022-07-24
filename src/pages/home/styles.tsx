@@ -42,7 +42,10 @@ export const Content = styled.div`
         padding: 16px;
     }
 
-    #items { grid-area: items; }
+    #items {
+        grid-area: items;
+        padding: 16px;
+    }
 
     #pokemons {
         grid-area: pokemons;
