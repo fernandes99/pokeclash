@@ -28,11 +28,14 @@ const user = createSlice({
             }
             state.pokemons?.push(commons);
         },
+        setUserMoney (state: UserStateType, action: any) {
+            state.money = Math.max(0, state.money + action.payload);
+        },
         resetUserData (state: UserStateType, action: any) {
             Object.assign(state, mocks.user);
         }
     }
 })
 
-export const { setUserData, setUserName, setUserNewPokemon, resetUserData } = user.actions;
+export const { setUserData, setUserName, setUserNewPokemon, resetUserData, setUserMoney } = user.actions;
 export default user.reducer;

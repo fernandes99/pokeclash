@@ -8,7 +8,9 @@ import { MyPokemons } from "../../components/myPokemons";
 import { Pokemon } from "../../components/pokemon"
 import { Statistics } from "../../components/statistics";;
 import { RootState } from "../../store";
-import { setPokemonEnemy } from "../../store/reducers/pokemonEnemy";
+import { resetBattleLog } from "../../store/reducers/battleLogs";
+import { resetPokemonAllied } from "../../store/reducers/pokemonAllied";
+import { resetPokemonEnemy, setPokemonEnemy } from "../../store/reducers/pokemonEnemy";
 import { setUserData } from "../../store/reducers/user";
 import { capitalize, getRandomIntFromInterval, pkmRateInPercentage } from "../../utils/general";
 import { requests } from "../../utils/requests";
@@ -56,19 +58,31 @@ export const HomePage = () => {
         pokemon.xp.base = pokemon.base_experience;
         pokemon.xp.next_level = pokemon.xp.base * pokemon.level;
         pokemon.xp.current = getRandomIntFromInterval(0, pokemon.base_experience);
-        pokemon.capture_rate = pkmRateInPercentage(pokemon.capture_rate);
+        pokemon.capture_rate = pkmRateInPercentage(pokemon.capture_rate) / 4;
 
         dispatch(setPokemonEnemy(pokemon));
+        dispatch(resetBattleLog(true));
+    }
+
+    const resetAllBattleStates = () => {
+        dispatch(resetPokemonAllied(true));
+        dispatch(resetPokemonEnemy(true));
     }
 
     useEffect(() => {
         auth();
-        setEnemy();
     }, [])
 
     useEffect(() => {
         storage.set('user', user);
     }, [user]);
+
+    useEffect(() => {
+        if (!global.explore) resetAllBattleStates();
+        else setEnemy();
+
+
+    }, [global.explore])
 
     return (
         <>

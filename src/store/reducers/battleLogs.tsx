@@ -8,9 +8,12 @@ const battleLogs = createSlice({
     reducers: {
         setBattleLog (state: any, action: any) {
             state.logs.push(action.payload);
+        },
+        resetBattleLog (state: any, action: any) {
+            state.logs = [];
         }
     }
 })
 
-export const { setBattleLog } = battleLogs.actions;
+export const { setBattleLog, resetBattleLog } = battleLogs.actions;
 export default battleLogs.reducer;

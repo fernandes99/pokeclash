@@ -16,7 +16,6 @@ export const MyPokemons = (props: any) => {
 
     useEffect(() => {
         setPokemons(props.data);
-        console.log(props.data);
     }, [props.data])
 
     return (

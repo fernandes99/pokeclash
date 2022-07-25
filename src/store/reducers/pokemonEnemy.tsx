@@ -26,11 +26,15 @@ const pokemonEnemy = createSlice({
         },
 
         setCurrentHpPokemonEnemy (state: any, action: any) {
-            state.status.hp_current = action.payload;
+            state.status.hp_current = Math.max(0, action.payload);
             state.status.hp_percentage = getPercentage(action.payload, state.status.hp_total);
+        },
+
+        resetPokemonEnemy (state: any, action: any) {
+            Object.assign(state, mocks.pokemon);
         }
     }
 })
 
-export const { setPokemonEnemy, updatePokemonEnemy, setCurrentHpPokemonEnemy, setCaptureRatePokemonEnemy } = pokemonEnemy.actions;
+export const { setPokemonEnemy, updatePokemonEnemy, setCurrentHpPokemonEnemy, setCaptureRatePokemonEnemy, resetPokemonEnemy } = pokemonEnemy.actions;
 export default pokemonEnemy.reducer;

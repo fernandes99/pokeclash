@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { setExplore } from "../../store/reducers/global";
 import { setUserNewPokemon } from "../../store/reducers/user";
 import { getRandomIntFromInterval } from "../../utils/general";
 import { Stats } from "../statistics/styles";
@@ -20,9 +21,9 @@ export const Items = (props: any) => {
         if (enemy.capture_rate >= random) {
             alert(`Parabéns, você conseguiu capturar ${enemy.name}`);
             dispatch(setUserNewPokemon(enemy));
-            location.reload();
+            dispatch(setExplore(false));
         }
-        else return alert('FAILED');
+        else return alert(`Você não conseguiu capturar ${enemy.name}`);
     }
 
     const usePotion = () => {

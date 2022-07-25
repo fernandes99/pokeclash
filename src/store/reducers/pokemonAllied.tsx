@@ -21,12 +21,20 @@ const pokemonAllied = createSlice({
             Object.assign(state, action.payload)
         },
 
+        addXpPokemonAllied (state: any, action: any) {
+            state.xp.current = state.xp.current + action.payload;
+        },
+
         setCurrentHpPokemonAllied (state: any, action: any) {
             state.status.hp_current = action.payload;
             state.status.hp_percentage = getPercentage(action.payload, state.status.hp_total);
+        },
+
+        resetPokemonAllied (state: any, action: any) {
+            Object.assign(state, mocks.pokemon);
         }
     }
 })
 
-export const { setPokemonAllied, updatePokemonAllied, setCurrentHpPokemonAllied } = pokemonAllied.actions;
+export const { setPokemonAllied, updatePokemonAllied, setCurrentHpPokemonAllied, addXpPokemonAllied, resetPokemonAllied } = pokemonAllied.actions;
 export default pokemonAllied.reducer;
