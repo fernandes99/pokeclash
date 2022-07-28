@@ -15,14 +15,13 @@ import { Header } from "./components/header";
 // Store
 import { RootState } from "../../store";
 import { resetBattleLog } from "../../store/reducers/battleLogs";
-import { setBattleLose, setBattleWin } from "../../store/reducers/global";
+import { blockActions, setBattleLose, setBattleWin } from "../../store/reducers/global";
 import { resetPokemonAllied } from "../../store/reducers/pokemonAllied";
 import { resetPokemonEnemy, setPokemonEnemy } from "../../store/reducers/pokemonEnemy";
 import { setUserData, updateUserPokemon } from "../../store/reducers/user";
 
 // Utils
-import { capitalize, getPokemon, getRandomIntFromInterval, getRandomValue, pkmRateInPercentage } from "../../utils/general";
-import { requests } from "../../utils/requests";
+import { getPokemon } from "../../utils/general";
 import { storage } from "../../utils/storage";
 
 // Style
@@ -50,6 +49,7 @@ export const HomePage = () => {
 
         dispatch(setPokemonEnemy(pokemon));
         dispatch(resetBattleLog(true));
+        dispatch(blockActions(false));
     }
 
     const resetAllBattleStates = () => {
@@ -59,6 +59,7 @@ export const HomePage = () => {
 
     useEffect(() => {
         auth();
+        dispatch(blockActions(true));
     }, [])
 
     useEffect(() => {
@@ -76,6 +77,7 @@ export const HomePage = () => {
 
     useEffect(() => {
         if (global.battleWin || global.battleLose) {
+            
             dispatch(updateUserPokemon(allied));
             dispatch(setBattleWin(false));
             dispatch(setBattleLose(false));

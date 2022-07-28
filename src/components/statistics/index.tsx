@@ -38,12 +38,12 @@ export const Statistics = (props: any) => {
 
                 <li>
                     <span>Taxa de Vitórias:</span>
-                    <span>{stats.winRate}</span>
+                    <span>{stats.winRate}%</span>
                 </li>
 
                 <li>
                     <span>Pokedéx:</span>
-                    <span>7 de 580</span>
+                    <span>{stats.pokemons.length} de 649</span>
                 </li>
             </ul>
         </Stats>

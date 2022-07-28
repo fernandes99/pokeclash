@@ -4,7 +4,7 @@ export const requests = {
     get: {
         pokemon: async (name?: string, id?: number) => {
             const value = name || id;
-            const limit = 800;
+            const limit = 649;
 
             if (value) {
                 return await fetch(`${configs.urls.pokeApi}/pokemon/${value}`, { mode: 'cors' })

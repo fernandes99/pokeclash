@@ -34,9 +34,9 @@ body {
 #app {
     position: relative;
     margin: auto;
-    max-width: 800px;
+    max-width: 860px;
     max-height: 600px;
-    width: 800px;
+    width: 860px;
     height: 100%;
     padding: 86px 32px 32px;
     

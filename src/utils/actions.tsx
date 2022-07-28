@@ -1,14 +1,15 @@
 import { setBattleLog } from "../store/reducers/battleLogs";
-import { setAttacking, setBattleLose, setBattleWin, setExplore, setLoading } from "../store/reducers/global";
+import { blockActions, setBattleLose, setBattleWin, setExplore, setLoading } from "../store/reducers/global";
 import { setCurrentHpPokemonAllied, addXpPokemonAllied } from "../store/reducers/pokemonAllied";
 import { setCurrentHpPokemonEnemy } from "../store/reducers/pokemonEnemy";
-import { setUserMoney } from "../store/reducers/user";
-import { getRandomIntFromInterval, sleep } from "./general";
+import { setUserData, setUserMoney } from "../store/reducers/user";
+import { PokemonType, UserStateType } from "../store/types";
+import { getPercentage, getRandomIntFromInterval, sleep } from "./general";
 import { requests } from "./requests";
 
 export const actions = {
-    attack: async (target: 'enemy' | 'allied', dispatch: any, enemy: any, allied: any, user: any, move: any) => {
-        dispatch(setAttacking(true));
+    attack: async (target: 'enemy' | 'allied', dispatch: any, enemy: PokemonType, allied: PokemonType, user: UserStateType, move: any) => {
+        dispatch(blockActions(true));
 
         const multiplicatorType = (type: any) => {
             const double = enemy.types.some((i: any) => type.damage_relations.double_damage_to.some((item: any) => item.name === i.type.name));
@@ -27,7 +28,7 @@ export const actions = {
             if (!res.power) res.power = 10;
 
             if (target === 'enemy') {
-                let damage = res.power / 2 + (allied.level) * multiplicatorType(type);
+                let damage = res.power / 3 + (allied.level) * multiplicatorType(type);
                     damage = getRandomIntFromInterval(damage - (damage / 2), damage + (damage / 2));
 
                 const current = enemy.status.hp_current - damage;
@@ -47,13 +48,21 @@ export const actions = {
 
                     dispatch(addXpPokemonAllied(expGained));
                     dispatch(setCurrentHpPokemonAllied(allied.status.hp_total));
-                    dispatch(setUserMoney(moneyGained));
+
+                    const userData = {
+                        fights: user.fights + 1,
+                        wins: user.wins + 1,
+                        losses: user.losses,
+                        winRate: getPercentage(user.wins + 1, user.losses)
+                    }
+
+                    dispatch(setUserData(userData));
 
                     alert(`Você derrotou ${enemy.name} e ${allied.name} ganhou ${expGained} de experiencia`);
                     alert(`Parabéns, você ganhou R$ ${moneyGained}`);
 
                     dispatch(setBattleWin(true));
-                    dispatch(setAttacking(false));
+                    dispatch(blockActions(false));
                     dispatch(setExplore(false));
                     
 
@@ -84,7 +93,15 @@ export const actions = {
 
                     dispatch(addXpPokemonAllied(expGained));
                     dispatch(setCurrentHpPokemonAllied(allied.status.hp_total));
-                    dispatch(setUserMoney(moneyLossed));
+                    
+                    const userData = {
+                        fights: user.fights + 1,
+                        wins: user.wins,
+                        losses: user.losses + 1,
+                        winRate: getPercentage(user.wins, user.losses + 1)
+                    }
+
+                    dispatch(setUserData(userData));
 
                     alert(`Você foi derrotado por ${enemy.name}. Seu ${allied.name} ganhou apenas ${expGained} de experiencia`);
                     alert(`Você perdeu R$${Math.abs(moneyLossed)}`);
@@ -93,7 +110,7 @@ export const actions = {
                     dispatch(setBattleLose(true));
                 }
 
-                dispatch(setAttacking(false));
+                dispatch(blockActions(false));
             }
         });
     }

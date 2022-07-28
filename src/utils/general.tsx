@@ -28,7 +28,7 @@ export const capitalize = (value: string, lower = false) => {
 
 export const getPercentage = (current: number, total: number) => {
     const result = parseFloat(Math.round((current / total) * 100).toFixed(2));
-    return result;
+    return result == Infinity ? 100 : result;
 }
 
 export const pkmRateInPercentage = (rate: number) => {
@@ -62,7 +62,7 @@ export const getPokemon = async (name?: string, level?: number) => {
     pokemon.name = capitalize(pokemon.name);
     pokemon.level = level ? level : getRandomIntFromInterval(1, 10);
     pokemon.image = base.sprites.front_default;
-    pokemon.status.hp_total = parseInt(pokemon.stats[0].base_stat + ((pokemon.stats[0].base_stat * 0.1) * pokemon.level / 5));
+    pokemon.status.hp_total = parseInt(pokemon.stats[0].base_stat + ((pokemon.stats[0].base_stat * 0.1) * pokemon.level / 2));
     pokemon.status.hp_current = pokemon.status.hp_total;
     pokemon.status.hp_percentage = 100;
     pokemon.xp.base = pokemon.base_experience;
@@ -105,5 +105,6 @@ export const getPokemon = async (name?: string, level?: number) => {
         });
     }
 
+    console.log(pokemon.name, pokemon);
     return pokemon;
 }

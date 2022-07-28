@@ -16,7 +16,7 @@ const global = createSlice({
         setExplore (state: any, action: any) {
             state.explore = action.payload;
         },
-        setAttacking (state: any, action: any) {
+        blockActions (state: any, action: any) {
             state.atacking = action.payload;
         },
         setBattleWin (state: any, action: any) {
@@ -28,5 +28,5 @@ const global = createSlice({
     }
 })
 
-export const { setLoading, setExplore, setAttacking, setBattleWin, setBattleLose } = global.actions;
+export const { setLoading, setExplore, blockActions, setBattleWin, setBattleLose } = global.actions;
 export default global.reducer;

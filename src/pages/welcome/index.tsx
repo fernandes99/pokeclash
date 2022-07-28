@@ -22,9 +22,9 @@ export const WelcomePage = () => {
         let pokemons:any = [];
 
         pokemons.push(
-            await getPokemon('charmander', 5),
-            await getPokemon('bulbasaur', 5),
-            await getPokemon('squirtle', 5),
+            await getPokemon('charmander', 16),
+            await getPokemon('bulbasaur', 16),
+            await getPokemon('squirtle', 16),
         );
 
         setInitialPkms(pokemons);
