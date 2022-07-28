@@ -1,13 +1,15 @@
 import { setBattleLog } from "../store/reducers/battleLogs";
-import { setExplore } from "../store/reducers/global";
+import { setAttacking, setExplore, setLoading } from "../store/reducers/global";
 import { setCurrentHpPokemonAllied, addXpPokemonAllied } from "../store/reducers/pokemonAllied";
 import { setCurrentHpPokemonEnemy } from "../store/reducers/pokemonEnemy";
 import { setUserMoney } from "../store/reducers/user";
-import { getRandomIntFromInterval } from "./general";
+import { getRandomIntFromInterval, sleep } from "./general";
 import { requests } from "./requests";
 
 export const actions = {
-    attack: (target: 'enemy' | 'allied', dispatch: any, enemy: any, allied: any, user: any, move: any) => {
+    attack: async (target: 'enemy' | 'allied', dispatch: any, enemy: any, allied: any, user: any, move: any) => {
+        dispatch(setAttacking(true));
+
         const multiplicatorType = (type: any) => {
             const double = enemy.types.some((i: any) => type.damage_relations.double_damage_to.some((item: any) => item.name === i.type.name));
             const half = enemy.types.some((i: any) => type.damage_relations.half_damage_to.some((item: any) => item.name === i.type.name));
@@ -39,7 +41,7 @@ export const actions = {
                         expGained = getRandomIntFromInterval(expGained / 1.5, expGained * 1.5);
                         expGained = Math.round(expGained);
 
-                    let moneyGained = 10 * enemy.level / allied.level;
+                    let moneyGained = 20 * enemy.level / allied.level;
                         moneyGained = getRandomIntFromInterval(moneyGained / 1.5, moneyGained * 1.5);
                         moneyGained = Math.round(moneyGained);
 
@@ -51,7 +53,7 @@ export const actions = {
 
                     dispatch(setExplore(false));
 
-                    return;
+                    return dispatch(setAttacking(false));
                 }
 
                 return actions.attack('allied', dispatch, enemy, allied, user, enemy.moves[getRandomIntFromInterval(0, enemy.moves.length - 1)].move);
@@ -83,9 +85,9 @@ export const actions = {
                     alert(`Você perdeu R$${Math.abs(moneyLossed)}`);
 
                     dispatch(setExplore(false));
-
-                    return;
                 }
+
+                dispatch(setAttacking(false));
             }
         });
     }

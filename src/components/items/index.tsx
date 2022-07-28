@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { setExplore } from "../../store/reducers/global";
+import { setExplore, setLoading } from "../../store/reducers/global";
+import { setCurrentHpPokemonEnemy } from "../../store/reducers/pokemonEnemy";
 import { setUserNewPokemon } from "../../store/reducers/user";
 import { getRandomIntFromInterval } from "../../utils/general";
 import { Stats } from "../statistics/styles";
@@ -11,8 +12,9 @@ export const Items = (props: any) => {
     const [items, setItems] = useState(props.data);
     const global = useSelector((state: RootState) => state.global);
     const enemy = useSelector((state: RootState) => state.pokemonEnemy);
+    const [pkmCatched, setPkmCatch] = useState(false);
 
-    const usePokeball = () => {
+    const usePokeball = async () => {
         if (!global.explore) return alert('Você não está em batalha.');
         if (!items.pokeballs) return alert('Você não tem pokebolas para usar.');
 
@@ -20,11 +22,18 @@ export const Items = (props: any) => {
 
         if (enemy.capture_rate >= random) {
             alert(`Parabéns, você conseguiu capturar ${enemy.name}`);
-            dispatch(setUserNewPokemon(enemy));
-            dispatch(setExplore(false));
+            dispatch(setCurrentHpPokemonEnemy(enemy.status.hp_total));
+            setPkmCatch(true);
         }
         else return alert(`Você não conseguiu capturar ${enemy.name}`);
     }
+
+    useEffect(() => {
+        if (pkmCatched) {
+            dispatch(setUserNewPokemon(enemy));
+            dispatch(setExplore(false));
+        }
+    }, [pkmCatched])
 
     const usePotion = () => {
         if (!global.explore) return alert('Você não está em batalha.');

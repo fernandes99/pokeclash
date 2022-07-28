@@ -11,6 +11,7 @@ export const Pokemon = (props: any) => {
     const enemy = useSelector((state: RootState) => state.pokemonEnemy);
     const allied = useSelector((state: RootState) => state.pokemonAllied);
     const user = useSelector((state: RootState) => state.user);
+    const global = useSelector((state: RootState) => state.global);
     const [pokemon, setPokemon] = useState(props.data);
 
     const updateRate = () => {
@@ -49,7 +50,7 @@ export const Pokemon = (props: any) => {
                     {!props.isSmall &&
                         <AttackBlock>
                             <Text>Ataques:</Text>
-                            <List>
+                            <List disabled={global.atacking}>
                                 {pokemon.moves?.map((item: any, index: number) => (
                                     <Item key={index} onClick={() => actions.attack('enemy', dispatch, enemy, allied, user, item.move)}>
                                         <span>{item.move.name}</span>

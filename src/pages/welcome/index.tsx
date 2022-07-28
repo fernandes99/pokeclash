@@ -9,7 +9,7 @@ import { Box, Form, Input, Text, Title, ChoiceBox, Choice } from "./styles"
 import { resetUserData, setUserData, setUserName, setUserNewPokemon } from "../../store/reducers/user"
 import { useEffect, useState } from "react"
 import { requests } from "../../utils/requests"
-import { getRandomIntFromInterval, getRandomValue, pkmRateInPercentage } from "../../utils/general"
+import { getRandomIntFromInterval, getRandomValue, pkmRateInPercentage, resetAllStates } from "../../utils/general"
 
 export const WelcomePage = () => {
     const navigate = useNavigate();
@@ -76,7 +76,7 @@ export const WelcomePage = () => {
 
     useEffect(() => {
         storage.clear();
-        dispatch(resetUserData(true));
+        resetAllStates(dispatch);
     }, []);
 
     useEffect(() => {

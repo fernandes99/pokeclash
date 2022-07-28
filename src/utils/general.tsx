@@ -1,3 +1,8 @@
+import { resetBattleLog } from "../store/reducers/battleLogs";
+import { setExplore } from "../store/reducers/global";
+import { resetPokemonAllied } from "../store/reducers/pokemonAllied";
+import { resetUserData } from "../store/reducers/user";
+
 export const isJsonString = (value: string) => {
     try {
         JSON.parse(value);
@@ -28,3 +33,12 @@ export const getPercentage = (current: number, total: number) => {
 export const pkmRateInPercentage = (rate: number) => {
 	return parseFloat(((100 * rate) / 255).toFixed(2));
 }
+
+export const resetAllStates = (dispatch: any) => {
+    dispatch(resetBattleLog(true));
+    dispatch(resetPokemonAllied(true));
+    dispatch(resetUserData(true));
+    dispatch(setExplore(false));
+}
+
+export const sleep = (ms: number) => new Promise(resolve => setTimeout(() => resolve(true), ms));

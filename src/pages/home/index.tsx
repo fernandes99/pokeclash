@@ -22,6 +22,7 @@ import { Box, Content, Block } from "./styles"
 export const HomePage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const user = useSelector((state: RootState) => state.user);
     const enemy = useSelector((state: RootState) => state.pokemonEnemy);
     const allied = useSelector((state: RootState) => state.pokemonAllied);
@@ -51,7 +52,7 @@ export const HomePage = () => {
         pokemon.level = getRandomIntFromInterval(1, 10);
         pokemon.image = base.sprites.front_default;
         pokemon.moves = pokemon.moves.slice(randomMove, randomMove + 4);
-        pokemon.status.hp_total = parseInt(pokemon.stats[0].base_stat + ((pokemon.stats[0].base_stat * 0.1) * pokemon.level));
+        pokemon.status.hp_total = parseInt(pokemon.stats[0].base_stat + ((pokemon.stats[0].base_stat * 0.2) * pokemon.level / 2));
         pokemon.status.hp_current = pokemon.status.hp_total;
         pokemon.status.hp_percentage = 100;
         pokemon.xp = {}
@@ -93,7 +94,7 @@ export const HomePage = () => {
                         {global.explore
                             ? <Block>
                                 {allied?.id ? <Pokemon data={allied} /> : <SelectPokemonToBattle />}
-                                {enemy?.id && <Pokemon data={enemy} isSmall={true}/>}
+                                {enemy?.id ? <Pokemon data={enemy} isSmall={true}/> : 'Procurando Pokemon Selvagem'}
                             </Block>
                             : <ExploreBlock />
                         }

@@ -31,12 +31,19 @@ export const Small = styled.span`
     margin-left: 8px;
 `
 
-export const List = styled.ul`
+export const List = styled.ul.attrs((props: any) => props)`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     margin-top: 4px;
     gap: 4px;
+
+    ${props => props.disabled ?
+        {
+            opacity: '.5',
+            pointerEvents: 'none'
+        } : ''
+    }
 `
 
 export const Item = styled.li`

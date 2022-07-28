@@ -19,9 +19,12 @@ export const Box = styled.div`
     }
 `
 export const Block = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    align-items: center;
+    grid-template-columns: 1fr;
+    justify-content: start;
+    gap: 4px;
     height: 100%;
 `
 
