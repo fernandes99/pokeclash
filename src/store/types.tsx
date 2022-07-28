@@ -37,5 +37,11 @@ export type PokemonType = {
         hp_total: number,
         hp_current: number,
         hp_percentage: number,
-    }
+    },
+    evolution?: {
+        to: {
+            name: string,
+            url: string,
+        },
+    },
 }

@@ -35,7 +35,7 @@ export const Spinner = styled.div`
     height: 40px;
     color:#f03355;
     position: relative;
-    background: radial-gradient(10px,currentColor 94%,#0000);z
+    background: radial-gradient(10px, currentColor 94%, #0000);
 
     &:before {
         content:'';
@@ -49,6 +49,6 @@ export const Spinner = styled.div`
             radial-gradient(9px at top    left ,#0000 94%,currentColor) bottom right;
         background-size:20px 20px;
         background-repeat: no-repeat;
-        animation: loadFrame 1.5s infinite cubic-bezier(0.3,1,0,1);
+        animation: loadFrame 1.5s infinite cubic-bezier(0.3,1,0,1) !important;
     }
 `

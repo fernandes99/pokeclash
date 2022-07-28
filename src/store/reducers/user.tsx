@@ -30,6 +30,7 @@ const user = createSlice({
         },
         updateUserPokemon (state: UserStateType, action: any) {
             if (state.pokemons) {
+                
                 const index = state.pokemons?.findIndex((item: PokemonType) => action.payload.id == item.id);
                 state.pokemons[index] = action.payload;
             }

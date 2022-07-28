@@ -19,6 +19,12 @@ export const mocks = {
             hp_total: 0,
             hp_current: 0,
             hp_percentage: 0,
+        },
+        evolution: {
+            to: {
+                name: '',
+                url: '',
+            },
         }
     } as PokemonType,
 

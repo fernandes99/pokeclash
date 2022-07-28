@@ -36,6 +36,13 @@ export const requests = {
         type: async (name: string) => {
             return await fetch(`${configs.urls.pokeApi}/type/${name}`, { mode: 'cors' })
                 .then(res => res.json());
-        }
+        },
+
+        evolution: async (url: string) => {
+            if (!url) return null;
+
+            return await fetch(url, { mode: 'cors' })
+                .then(res => res.json());
+        },
     },
 }

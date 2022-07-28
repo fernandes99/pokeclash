@@ -27,7 +27,7 @@ export const actions = {
             if (!res.power) res.power = 10;
 
             if (target === 'enemy') {
-                let damage = res.power / 1.5 + (allied.level) * multiplicatorType(type);
+                let damage = res.power / 2 + (allied.level) * multiplicatorType(type);
                     damage = getRandomIntFromInterval(damage - (damage / 2), damage + (damage / 2));
 
                 const current = enemy.status.hp_current - damage;
@@ -46,6 +46,7 @@ export const actions = {
                         moneyGained = Math.round(moneyGained);
 
                     dispatch(addXpPokemonAllied(expGained));
+                    dispatch(setCurrentHpPokemonAllied(allied.status.hp_total));
                     dispatch(setUserMoney(moneyGained));
 
                     alert(`Você derrotou ${enemy.name} e ${allied.name} ganhou ${expGained} de experiencia`);
@@ -82,6 +83,7 @@ export const actions = {
                         moneyLossed = Math.round(moneyLossed);
 
                     dispatch(addXpPokemonAllied(expGained));
+                    dispatch(setCurrentHpPokemonAllied(allied.status.hp_total));
                     dispatch(setUserMoney(moneyLossed));
 
                     alert(`Você foi derrotado por ${enemy.name}. Seu ${allied.name} ganhou apenas ${expGained} de experiencia`);
