@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { mocks } from "../../utils/mocks";
-import { UserStateType } from "../types";
+import { PokemonType, UserStateType } from "../types";
 
 const user = createSlice({
     name: 'user',
@@ -28,6 +28,12 @@ const user = createSlice({
             }
             state.pokemons?.push(commons);
         },
+        updateUserPokemon (state: UserStateType, action: any) {
+            if (state.pokemons) {
+                const index = state.pokemons?.findIndex((item: PokemonType) => action.payload.id == item.id);
+                state.pokemons[index] = action.payload;
+            }
+        },
         setUserMoney (state: UserStateType, action: any) {
             state.money = Math.max(0, state.money + action.payload);
         },
@@ -37,5 +43,5 @@ const user = createSlice({
     }
 })
 
-export const { setUserData, setUserName, setUserNewPokemon, resetUserData, setUserMoney } = user.actions;
+export const { setUserData, setUserName, setUserNewPokemon, resetUserData, setUserMoney, updateUserPokemon } = user.actions;
 export default user.reducer;

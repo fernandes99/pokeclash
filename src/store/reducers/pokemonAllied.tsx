@@ -4,7 +4,7 @@ import { mocks } from "../../utils/mocks";
 
 const pokemonAllied = createSlice({
     name: 'pokemonAllied',
-    initialState: mocks.pokemon as any,
+    initialState: mocks.pokemon,
     reducers: { 
         setPokemonAllied (state: any, action: any) {
             const commons: any = {};
@@ -23,6 +23,11 @@ const pokemonAllied = createSlice({
 
         addXpPokemonAllied (state: any, action: any) {
             state.xp.current = state.xp.current + action.payload;
+
+            while (state.xp.current >= state.xp.next_level) {
+                state.level += 1;
+                state.xp.next_level = state.xp.base * state.level + 1;
+            }
         },
 
         setCurrentHpPokemonAllied (state: any, action: any) {

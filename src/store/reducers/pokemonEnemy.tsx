@@ -4,7 +4,7 @@ import { mocks } from "../../utils/mocks";
 
 const pokemonEnemy = createSlice({
     name: 'pokemonEnemy',
-    initialState: mocks.pokemon as any,
+    initialState: mocks.pokemon,
     reducers: { 
         setPokemonEnemy (state: any, action: any) {
             const commons: any = {};

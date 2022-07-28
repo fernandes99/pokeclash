@@ -10,22 +10,7 @@ export type UserStateType = {
         pokeballs: number,
         potions: 0,
     },
-    pokemons?: [
-        {
-            id: number,
-            name: string,
-            level: number,
-            image: string,
-            moves: Array<any>,
-            types: Array<any>,
-            status: {
-                hp_total: number,
-                hp_current: number,
-            },
-            xp: number,
-            nextXpLevel: number
-        }?
-    ]
+    pokemons?: Array<PokemonType>,
     pokedex?: [
         {
             id: number,
@@ -33,3 +18,24 @@ export type UserStateType = {
         }?
     ]
 };
+
+export type PokemonType = {
+    id: number,
+    name: string,
+    level: number,
+    image: string,
+    color: string,
+    moves: Array<any>,
+    types: Array<any>,
+    capture_rate: number,
+    xp: {
+        base: number,
+        current: number,
+        next_level: number
+    },
+    status: {
+        hp_total: number,
+        hp_current: number,
+        hp_percentage: number,
+    }
+}

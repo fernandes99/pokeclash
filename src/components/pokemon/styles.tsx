@@ -65,6 +65,7 @@ export const LifeBar = styled.div.attrs((props: PropsLifeType) => props)`
     height: 5px;
     border-radius: 5px;
     background: var(--gray-light);
+    transition: all .3s;
 
     &:before {
         content: '';
@@ -81,6 +82,7 @@ export const LifeBar = styled.div.attrs((props: PropsLifeType) => props)`
                 }
             };
         border-radius: 5px;
+        transition: all .3s;
     }
 
     &:after {
@@ -95,5 +97,6 @@ export const LifeBar = styled.div.attrs((props: PropsLifeType) => props)`
         font-size: 12px;
         bottom: 4px;
         right: 0px;
+        transition: all .3s;
     }
 `

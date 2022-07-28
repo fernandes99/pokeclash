@@ -1,4 +1,4 @@
-import { UserStateType } from "../store/types"
+import { PokemonType, UserStateType } from "../store/types"
 
 export const mocks = {
     pokemon: {
@@ -20,7 +20,7 @@ export const mocks = {
             hp_current: 0,
             hp_percentage: 0,
         }
-    } as any, // TODO Type
+    } as PokemonType,
 
     user: {
         id: 0,

@@ -9,10 +9,11 @@ import { Pokemon } from "../../components/pokemon"
 import { Statistics } from "../../components/statistics";;
 import { RootState } from "../../store";
 import { resetBattleLog } from "../../store/reducers/battleLogs";
+import { setBattleWin } from "../../store/reducers/global";
 import { resetPokemonAllied } from "../../store/reducers/pokemonAllied";
 import { resetPokemonEnemy, setPokemonEnemy } from "../../store/reducers/pokemonEnemy";
-import { setUserData } from "../../store/reducers/user";
-import { capitalize, getRandomIntFromInterval, pkmRateInPercentage } from "../../utils/general";
+import { setUserData, updateUserPokemon } from "../../store/reducers/user";
+import { capitalize, getRandomIntFromInterval, getRandomValue, pkmRateInPercentage } from "../../utils/general";
 import { requests } from "../../utils/requests";
 import { storage } from "../../utils/storage";
 import { ExploreBlock, SelectPokemonToBattle } from "./components/general";
@@ -44,18 +45,20 @@ export const HomePage = () => {
             ...base,
             ...pokemon,
             status: {},
+            xp: {}
         };
 
         let randomMove = getRandomIntFromInterval(0, pokemon.moves.length - 1);
 
+        pokemon.id = getRandomValue();
+        pokemon.pokedex_id = pokemon.id;
         pokemon.name = capitalize(pokemon.name);
-        pokemon.level = getRandomIntFromInterval(1, 10);
+        pokemon.level = getRandomIntFromInterval(1, 1);
         pokemon.image = base.sprites.front_default;
         pokemon.moves = pokemon.moves.slice(randomMove, randomMove + 4);
         pokemon.status.hp_total = parseInt(pokemon.stats[0].base_stat + ((pokemon.stats[0].base_stat * 0.2) * pokemon.level / 2));
         pokemon.status.hp_current = pokemon.status.hp_total;
         pokemon.status.hp_percentage = 100;
-        pokemon.xp = {}
         pokemon.xp.base = pokemon.base_experience;
         pokemon.xp.next_level = pokemon.xp.base * pokemon.level;
         pokemon.xp.current = getRandomIntFromInterval(0, pokemon.base_experience);
@@ -79,11 +82,20 @@ export const HomePage = () => {
     }, [user]);
 
     useEffect(() => {
+
+    }, [user.pokemons]);
+
+    useEffect(() => {
         if (!global.explore) resetAllBattleStates();
         else setEnemy();
+    }, [global.explore]);
 
-
-    }, [global.explore])
+    useEffect(() => {
+        if (global.battleWin) {
+            dispatch(updateUserPokemon(allied));
+            dispatch(setBattleWin(false));
+        }
+    }, [global.battleWin])
 
     return (
         <>
@@ -94,7 +106,7 @@ export const HomePage = () => {
                         {global.explore
                             ? <Block>
                                 {allied?.id ? <Pokemon data={allied} /> : <SelectPokemonToBattle />}
-                                {enemy?.id ? <Pokemon data={enemy} isSmall={true}/> : 'Procurando Pokemon Selvagem'}
+                                {enemy?.id ? <Pokemon data={enemy} isSmall={true} /> : 'Procurando Pokemon Selvagem'}
                             </Block>
                             : <ExploreBlock />
                         }

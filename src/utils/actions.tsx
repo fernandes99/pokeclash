@@ -1,5 +1,5 @@
 import { setBattleLog } from "../store/reducers/battleLogs";
-import { setAttacking, setExplore, setLoading } from "../store/reducers/global";
+import { setAttacking, setBattleLose, setBattleWin, setExplore, setLoading } from "../store/reducers/global";
 import { setCurrentHpPokemonAllied, addXpPokemonAllied } from "../store/reducers/pokemonAllied";
 import { setCurrentHpPokemonEnemy } from "../store/reducers/pokemonEnemy";
 import { setUserMoney } from "../store/reducers/user";
@@ -51,9 +51,12 @@ export const actions = {
                     alert(`Você derrotou ${enemy.name} e ${allied.name} ganhou ${expGained} de experiencia`);
                     alert(`Parabéns, você ganhou R$ ${moneyGained}`);
 
+                    dispatch(setBattleWin(true));
+                    dispatch(setAttacking(false));
                     dispatch(setExplore(false));
+                    
 
-                    return dispatch(setAttacking(false));
+                    return;
                 }
 
                 return actions.attack('allied', dispatch, enemy, allied, user, enemy.moves[getRandomIntFromInterval(0, enemy.moves.length - 1)].move);
@@ -85,6 +88,7 @@ export const actions = {
                     alert(`Você perdeu R$${Math.abs(moneyLossed)}`);
 
                     dispatch(setExplore(false));
+                    dispatch(setBattleLose(true));
                 }
 
                 dispatch(setAttacking(false));
