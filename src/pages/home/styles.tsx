@@ -19,24 +19,24 @@ export const Box = styled.div`
     }
 `
 export const Block = styled.div`
-    display: grid;
-    grid-template-rows: 2fr 1fr;
-    align-items: center;
-    grid-template-columns: 1fr;
-    justify-content: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     gap: 4px;
     height: 100%;
 `
 
 export const Content = styled.div`
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 2fr 1fr 2fr;
     grid-template-areas: "battle battle statistics"
                          "battle battle items"
                          "logs   logs   pokemons";
     gap: 12px;
     height: 100%;
+    width: 100%;
+    padding: 0 24px 24px;
 
     #battle { grid-area: battle; }
 

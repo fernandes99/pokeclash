@@ -23,7 +23,7 @@ export const MyPokemons = (props: any) => {
             <ul>
                 {pokemons.map((pkm: any, index: number) => (
                     <li key={index} onClick={() => handleSelect(pkm)}>
-                        <Image color={colors.pokemons[pkm.color.name]} src={pkm.image} />
+                        <Image color={colors.pokemons[pkm.color]} src={pkm.image} />
                         <Info>
                             <Text>{pkm.name}</Text>
                             <Small>(Lv. {pkm.level})</Small>

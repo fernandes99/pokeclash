@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { setExplore, setLoading } from "../../store/reducers/global";
+import { setExplore, setTurn } from "../../store/reducers/global";
 import { setCurrentHpPokemonEnemy } from "../../store/reducers/pokemonEnemy";
 import { setUserNewPokemon } from "../../store/reducers/user";
 import { getRandomIntFromInterval } from "../../utils/general";
@@ -23,15 +23,18 @@ export const Items = (props: any) => {
         if (enemy.capture_rate >= random) {
             alert(`Parabéns, você conseguiu capturar ${enemy.name}`);
             dispatch(setCurrentHpPokemonEnemy(enemy.status.hp_total));
-            setPkmCatch(true);
+            return setPkmCatch(true);
         }
-        else return alert(`Você não conseguiu capturar ${enemy.name}`);
+
+        alert(`Você não conseguiu capturar ${enemy.name}`);
+        dispatch(setTurn('enemy'));
     }
 
     useEffect(() => {
         if (pkmCatched) {
             dispatch(setUserNewPokemon(enemy));
             dispatch(setExplore(false));
+            setPkmCatch(false);
         }
     }, [pkmCatched])
 

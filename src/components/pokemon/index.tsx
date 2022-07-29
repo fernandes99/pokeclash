@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { setTurn } from "../../store/reducers/global";
 import { setCaptureRatePokemonEnemy } from "../../store/reducers/pokemonEnemy";
 import { actions } from "../../utils/actions";
 import { colors } from "../../utils/colors";
+import { getRandomIntFromInterval } from "../../utils/general";
 import { Box, LifeBar, Image, Block, Text, Small, List, Item, AttackBlock } from "./styles"
 
 export const Pokemon = (props: any) => {
@@ -32,7 +34,7 @@ export const Pokemon = (props: any) => {
     return (
         <>
             <Box>
-                <Image color={colors.pokemons[pokemon.color.name]} src={pokemon.image} />
+                <Image color={colors.pokemons[pokemon.color]} src={pokemon.image} />
                 <Block>
                     <Text>
                         {pokemon.name}
@@ -50,7 +52,7 @@ export const Pokemon = (props: any) => {
                     {!props.isSmall &&
                         <AttackBlock>
                             <Text>Ataques:</Text>
-                            <List disabled={global.atacking}>
+                            <List disabled={global.blockActions}>
                                 {pokemon.moves?.map((item: any, index: number) => (
                                     <Item key={index} onClick={() => actions.attack('enemy', dispatch, enemy, allied, user, item.move)}>
                                         <span>{item.move.name}</span>

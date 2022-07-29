@@ -64,7 +64,6 @@ export const actions = {
                     dispatch(setBattleWin(true));
                     dispatch(blockActions(false));
                     dispatch(setExplore(false));
-                    
 
                     return;
                 }

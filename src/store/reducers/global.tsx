@@ -5,9 +5,10 @@ const global = createSlice({
     initialState: {
         loading: true as boolean,
         explore: false as boolean,
-        atacking: false as boolean,
+        blockActions: false as boolean,
         battleWin: false as boolean,
         battleLose: false as boolean,
+        turn: '' as 'enemy' | 'allied',
     },
     reducers: {
         setLoading (state: any, action: any) {
@@ -17,16 +18,19 @@ const global = createSlice({
             state.explore = action.payload;
         },
         blockActions (state: any, action: any) {
-            state.atacking = action.payload;
+            state.blockActions = action.payload;
         },
         setBattleWin (state: any, action: any) {
             state.battleWin = action.payload;
         },
         setBattleLose (state: any, action: any) {
             state.battleLose = action.payload;
+        },
+        setTurn(state: any, action: any) {
+            state.turn = action.payload
         }
     }
 })
 
-export const { setLoading, setExplore, blockActions, setBattleWin, setBattleLose } = global.actions;
+export const { setLoading, setExplore, blockActions, setBattleWin, setBattleLose, setTurn } = global.actions;
 export default global.reducer;

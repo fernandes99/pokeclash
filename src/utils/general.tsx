@@ -69,6 +69,7 @@ export const getPokemon = async (name?: string, level?: number) => {
     pokemon.xp.next_level = pokemon.xp.base * pokemon.level;
     pokemon.xp.current = getRandomIntFromInterval(0, pokemon.base_experience);
     pokemon.capture_rate = pkmRateInPercentage(pokemon.capture_rate) / 4;
+    pokemon.color = pokemon.color.name;
 
     const filterMoves = pokemon.moves.filter((move: any) => {
         const complienceLevel = move.version_group_details[0].level_learned_at <= pokemon.level;

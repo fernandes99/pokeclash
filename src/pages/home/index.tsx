@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 // Components
 import { BattleLogs } from "../../components/battleLogs";
-import { Container } from "../../components/general"
+import { Container, Spinner } from "../../components/general"
 import { Items } from "../../components/items";
 import { MyPokemons } from "../../components/myPokemons";
 import { Pokemon } from "../../components/pokemon"
@@ -15,17 +15,18 @@ import { Header } from "./components/header";
 // Store
 import { RootState } from "../../store";
 import { resetBattleLog } from "../../store/reducers/battleLogs";
-import { blockActions, setBattleLose, setBattleWin } from "../../store/reducers/global";
+import { blockActions, setBattleLose, setBattleWin, setTurn } from "../../store/reducers/global";
 import { resetPokemonAllied } from "../../store/reducers/pokemonAllied";
 import { resetPokemonEnemy, setPokemonEnemy } from "../../store/reducers/pokemonEnemy";
 import { setUserData, updateUserPokemon } from "../../store/reducers/user";
 
 // Utils
-import { getPokemon } from "../../utils/general";
+import { getPokemon, getRandomIntFromInterval } from "../../utils/general";
 import { storage } from "../../utils/storage";
 
 // Style
 import { Box, Content, Block } from "./styles"
+import { actions } from "../../utils/actions";
 
 export const HomePage = () => {
     const navigate = useNavigate();
@@ -67,8 +68,11 @@ export const HomePage = () => {
     }, [user]);
 
     useEffect(() => {
-
-    }, [user.pokemons]);
+        if (global.turn === 'enemy') {
+            dispatch(setTurn('allied'));
+            actions.attack('allied', dispatch, enemy, allied, user, enemy.moves[getRandomIntFromInterval(0, enemy.moves.length - 1)].move);
+        }
+    }, [global.turn])
 
     useEffect(() => {
         if (!global.explore) resetAllBattleStates();
@@ -93,7 +97,7 @@ export const HomePage = () => {
                         {global.explore
                             ? <Block>
                                 {allied?.id ? <Pokemon data={allied} /> : <SelectPokemonToBattle />}
-                                {enemy?.id ? <Pokemon data={enemy} isSmall={true} /> : 'Procurando Pokemon Selvagem'}
+                                {enemy?.id ? <Pokemon data={enemy} isSmall={true} /> : <Spinner align={'center'} size={32}/>}
                             </Block>
                             : <ExploreBlock />
                         }
