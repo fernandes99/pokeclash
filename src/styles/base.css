@@ -38,12 +38,23 @@ body {
     max-height: 600px;
     width: 860px;
     height: 600px;
-    overflow: hidden;
+    overflow: auto;
     
     border-radius: 16px;
     box-shadow: 0px 0px 30px rgba(0, 37, 81, 0.2);
     background-color: var(--white);
     z-index: 0;
+}
+
+#app::-webkit-scrollbar {
+    width: 6px;
+    background-color: transparent;
+}
+
+#app::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: var(--gray-light);
+    border-right: 5px solid transparent;
 }
 
 @media (max-width: 440px) {
