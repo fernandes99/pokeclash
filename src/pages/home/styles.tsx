@@ -17,6 +17,10 @@ export const Box = styled.div`
         background-color: #fff;
         padding: 0 8px;
     }
+
+    @media (max-width: 860px) {
+        padding: 18px 8px 8px;
+    }
 `
 export const Block = styled.div`
     display: grid;
@@ -57,5 +61,17 @@ export const Content = styled.div`
     #logs {
         grid-area: logs;
         padding: 24px 16px 16px;
+    }
+
+    @media (max-width: 860px) {
+        padding: 24px 8px 8px;
+        grid-template-columns: 1fr;
+        grid-template-rows: 360px 0px 200px 200px;
+        grid-template-areas: "battle"
+                             "battle"
+                             "logs"
+                             "items"
+                             "statistics"
+                             "pokemons";
     }
 `

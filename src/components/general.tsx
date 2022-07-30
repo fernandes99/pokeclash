@@ -16,6 +16,10 @@ export const Container = styled.div`
       background-color: var(--gray-light);
       border-right: 5px solid transparent;
   }
+
+  @media (max-width: 860px) {
+
+  }
 `
 
 export const Input = styled.input`

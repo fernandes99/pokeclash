@@ -21,7 +21,7 @@ export const Box = styled.div.attrs((props: any) => props)`
         flex-direction: ${props => props.direction ? props.direction : 'column'};
         flex-wrap: ${props => props.direction ? 'wrap' : 'no-wrap'};
         column-gap: 16px;
-        align-items: center;
+        align-items: flex-start;
 
         li {
             display: grid;

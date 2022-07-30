@@ -62,7 +62,6 @@ export const actions:any = {
 
                 dispatch(setBattleWin(true));
                 dispatch(blockActions(false));
-                dispatch(setExplore(false));
 
                 return;
             }
@@ -109,7 +108,6 @@ export const actions:any = {
                 alert(`Você foi derrotado por ${enemy.name}. Seu ${allied.name} ganhou apenas ${expGained} de experiencia`);
                 alert(`Você perdeu R$${Math.abs(moneyLossed)}`);
 
-                dispatch(setExplore(false));
                 dispatch(setBattleLose(true));
             }
 

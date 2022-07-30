@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { setBattleWin, setExplore, setTurn } from "../../store/reducers/global";
+import { setBattleWin, setTurn } from "../../store/reducers/global";
+import { setCurrentHpPokemonAllied } from "../../store/reducers/pokemonAllied";
 import { setCurrentHpPokemonEnemy } from "../../store/reducers/pokemonEnemy";
 import { setUserNewPokemon } from "../../store/reducers/user";
 import { getRandomIntFromInterval } from "../../utils/general";
@@ -12,6 +13,7 @@ export const Items = (props: any) => {
     const [items, setItems] = useState(props.data);
     const global = useSelector((state: RootState) => state.global);
     const enemy = useSelector((state: RootState) => state.pokemonEnemy);
+    const allied = useSelector((state: RootState) => state.pokemonAllied);
     const [pkmCatched, setPkmCatch] = useState(false);
 
     const usePokeball = async () => {
@@ -20,9 +22,12 @@ export const Items = (props: any) => {
 
         const random = getRandomIntFromInterval(0, 100);
 
+        console.log('Rate:', enemy.capture_rate);
+
         if (enemy.capture_rate >= random) {
             alert(`Parabéns, você conseguiu capturar ${enemy.name}`);
             dispatch(setCurrentHpPokemonEnemy(enemy.status.hp_total));
+            dispatch(setCurrentHpPokemonAllied(allied.status.hp_total));
             return setPkmCatch(true);
         }
 
@@ -33,7 +38,6 @@ export const Items = (props: any) => {
     useEffect(() => {
         if (pkmCatched) {
             dispatch(setUserNewPokemon(enemy));
-            dispatch(setExplore(false));
             dispatch(setBattleWin(true));
             setPkmCatch(false);
         }

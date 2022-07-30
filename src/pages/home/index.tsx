@@ -15,7 +15,7 @@ import { Header } from "./components/header";
 // Store
 import { RootState } from "../../store";
 import { resetBattleLog } from "../../store/reducers/battleLogs";
-import { blockActions, setBattleLose, setBattleWin, setTurn } from "../../store/reducers/global";
+import { blockActions, setBattleLose, setBattleWin, setExplore, setTurn } from "../../store/reducers/global";
 import { resetPokemonAllied } from "../../store/reducers/pokemonAllied";
 import { resetPokemonEnemy, setPokemonEnemy } from "../../store/reducers/pokemonEnemy";
 import { setUserData, updateUserPokemon } from "../../store/reducers/user";
@@ -57,6 +57,7 @@ export const HomePage = () => {
         dispatch(resetPokemonAllied(true));
         dispatch(resetPokemonEnemy(true));
         dispatch(resetBattleLog(true));
+        dispatch(setExplore(false));
     }
 
     useEffect(() => {

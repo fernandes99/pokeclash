@@ -4,6 +4,11 @@ import { PropsLifeType } from "./types";
 export const Box = styled.div`
     display: flex;
     align-items: flex-start;
+
+    @media (max-width: 860px) {
+        align-items: center;
+    }
+
 `
 
 export const Image = styled.img`
@@ -43,6 +48,10 @@ export const List = styled.ul.attrs((props: any) => props)`
             opacity: '.5',
             pointerEvents: 'none'
         } : ''
+    }
+
+    @media (max-width: 860px) {
+        grid-template-columns: 1fr;
     }
 `
 
