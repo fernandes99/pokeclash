@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { setTurn } from "../../store/reducers/global";
 import { setCaptureRatePokemonEnemy } from "../../store/reducers/pokemonEnemy";
 import { actions } from "../../utils/actions";
 import { colors } from "../../utils/colors";
-import { getRandomIntFromInterval } from "../../utils/general";
-import { Box, LifeBar, Image, Block, Text, Small, List, Item, AttackBlock } from "./styles"
+import { Box, LifeBar, Image, Block, Text, Small, List, Item, AttackBlock, DamageIndicator } from "./styles"
 
 export const Pokemon = (props: any) => {
     const dispatch = useDispatch();
@@ -53,9 +51,10 @@ export const Pokemon = (props: any) => {
                         <AttackBlock>
                             <Text>Ataques:</Text>
                             <List disabled={global.blockActions}>
-                                {pokemon.moves?.map((item: any, index: number) => (
-                                    <Item key={index} onClick={() => actions.attack('enemy', dispatch, enemy, allied, user, item.move)}>
-                                        <span>{item.move.name}</span>
+                                {pokemon.moves?.map((move: any, index: number) => (
+                                    <Item color={move.type.color} type={move.type.name} key={index} onClick={() => actions.attack('enemy', dispatch, enemy, allied, user, move)}>
+                                        <span>{move.name}</span>
+                                        <DamageIndicator damage={move.power}/>
                                     </Item>
                                 ))}
                             </List>

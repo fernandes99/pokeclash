@@ -19,9 +19,8 @@ export const Box = styled.div`
     }
 `
 export const Block = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+    grid-template-rows: 60% 40%;
     gap: 4px;
     height: 100%;
 `
@@ -29,25 +28,25 @@ export const Block = styled.div`
 export const Content = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 2fr 1fr 2fr;
+    grid-template-rows: 185px 85px 200px;
     grid-template-areas: "battle battle statistics"
                          "battle battle items"
                          "logs   logs   pokemons";
     gap: 12px;
     height: 100%;
     width: 100%;
-    padding: 0 24px 24px;
+    padding: 24px;
 
     #battle { grid-area: battle; }
 
     #statistics {
         grid-area: statistics;
-        padding: 16px;
+        padding: 16px 16px 0 16px;
     }
 
     #items {
         grid-area: items;
-        padding: 16px;
+        padding: 16px 16px 0 16px;
     }
 
     #pokemons {
@@ -55,5 +54,8 @@ export const Content = styled.div`
         padding: 16px;
     }
 
-    #logs { grid-area: logs; }
+    #logs {
+        grid-area: logs;
+        padding: 24px 16px 16px;
+    }
 `

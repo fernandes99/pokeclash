@@ -6,7 +6,6 @@ export const Box = styled.div`
     min-height: 58px;
     background: #3C90F5;
     padding: 0 24px;
-    margin-bottom: 24px;
 
     ul {
         display: flex;

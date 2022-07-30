@@ -2,7 +2,9 @@ import { resetBattleLog } from "../store/reducers/battleLogs";
 import { setExplore } from "../store/reducers/global";
 import { resetPokemonAllied } from "../store/reducers/pokemonAllied";
 import { resetUserData } from "../store/reducers/user";
+import { colors } from "./colors";
 import { requests } from "./requests";
+import { typeInBR } from "./translate";
 
 export const isJsonString = (value: string) => {
     try {
@@ -58,7 +60,7 @@ export const getPokemon = async (name?: string, level?: number) => {
     };
 
     pokemon.id = getRandomValue();
-    pokemon.pokedex_id = pokemon.id;
+    pokemon.pokedex_id = base.id;
     pokemon.name = capitalize(pokemon.name);
     pokemon.level = level ? level : getRandomIntFromInterval(1, 10);
     pokemon.image = base.sprites.front_default;
@@ -79,6 +81,25 @@ export const getPokemon = async (name?: string, level?: number) => {
     });
     let randomMove = getRandomIntFromInterval(0, filterMoves.length - 4);
     pokemon.moves = filterMoves.slice(randomMove, randomMove + 4);
+    pokemon.moves = await Promise.all(pokemon.moves.map(async (item: any) => {
+        const data = requests.get.move(item.move.name).then(async res => {
+            const type = await requests.get.type(res.type.name);
+            const power = res.power ? res.power : 10;
+            const accuracy = res.accuracy ? res.accuracy : 100;
+
+            type.color = colors.type[type.name];
+            type.name = typeInBR[type.name];
+
+            return {
+                name: res.name,
+                type: type,
+                power: power,
+                accuracy: accuracy,
+                effects: res.effect_entries
+            };
+        });
+        return data;
+    }));
     
     if (evolution?.chain) {
         await new Promise((resolve, reject) => {
@@ -108,4 +129,11 @@ export const getPokemon = async (name?: string, level?: number) => {
 
     console.log(pokemon.name, pokemon);
     return pokemon;
+}
+
+export const playSoundPkm = (id: number) => {
+    const sound = new Audio(`https://pokemoncries.com/cries/${id}.mp3`);
+
+    sound.volume = 0.2;
+    sound.play();
 }

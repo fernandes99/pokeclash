@@ -1,14 +1,37 @@
 import styled from 'styled-components';
 
-export const Box = styled.div`
-    li {
-        display: grid;
-        grid-template-columns: 64px 1fr;
-        cursor: pointer;
-        transition: all .2s;
+export const Box = styled.div.attrs((props: any) => props)`
+    display: flex;
+    overflow: overlay;
+    height: 100%;
 
-        &:hover {
-            transform: translateY(-2px);
+    ::-webkit-scrollbar {
+        width: 6px;
+        background-color: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: var(--gray-light);
+        border-right: 5px solid transparent;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: ${props => props.direction ? props.direction : 'column'};
+        flex-wrap: ${props => props.direction ? 'wrap' : 'no-wrap'};
+        column-gap: 16px;
+        align-items: center;
+
+        li {
+            display: grid;
+            grid-template-columns: 64px 1fr;
+            cursor: pointer;
+            transition: all .2s;
+
+            &:hover {
+                transform: translateY(-2px);
+            }
         }
     }
 `

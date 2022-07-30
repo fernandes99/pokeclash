@@ -13,15 +13,11 @@ export const BattleLogs = (props: any) => {
     const allied = useSelector((state: RootState) => state.pokemonAllied);
 
     const formatLogs = (logs: any) => {
-        const logFormated = logs.map((log: string) => {
-            return log.replaceAll('{enemy}', enemy.name);
-        })
-
         setLogs(logs);
     }
 
     useEffect(() => {
-        if (props.logs.length) formatLogs(props.logs);
+        formatLogs(props.logs);
     }, [props.logs]);
 
     return (
@@ -29,9 +25,9 @@ export const BattleLogs = (props: any) => {
             {logs.map((log: any, index: number) => {
                 let logFormated: any;
 
-                logFormated = reactStringReplace(log, '{enemy}', (match, i) => <Hightlight color={colors.pokemons[enemy.color]}>{enemy.name}</Hightlight>);
-                logFormated = reactStringReplace(logFormated, '{allied}', (match, i) => <Hightlight color={colors.pokemons[allied.color]}>{allied.name}</Hightlight>);
-                    
+                logFormated = reactStringReplace(log, '{enemy}', (match, i) => <Hightlight key={Math.random()} color={colors.pokemons[enemy.color]}>{enemy.name}</Hightlight>);
+                logFormated = reactStringReplace(logFormated, '{allied}', (match, i) => <Hightlight key={Math.random()} color={colors.pokemons[allied.color]}>{allied.name}</Hightlight>);
+
                 return (
                     <Log key={index}>{logFormated}</Log>
                 )

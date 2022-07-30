@@ -21,6 +21,7 @@ export type UserStateType = {
 
 export type PokemonType = {
     id: number,
+    pokedex_id: number,
     name: string,
     level: number,
     image: string,

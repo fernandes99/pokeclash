@@ -46,16 +46,75 @@ export const List = styled.ul.attrs((props: any) => props)`
     }
 `
 
-export const Item = styled.li`
-    padding: 4px 8px; 
+export const Item = styled.li.attrs((props: any) => props)`
+    position: relative;
+    padding: 4px 8px 6px; 
     border: 1px solid #ECECEC;
     border-radius: 4px; 
     font-size: 14px;
     cursor: pointer;
     transition: all .2s;
+    z-index: 1;
 
     &:hover {
         transform: scale(1.02);
+    }
+
+    &:before {
+        content: '${props => props.type}';
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: .9em;
+        border: 1px solid ${props => props.color};
+        color: ${props => props.color};
+        text-transform: capitalize;
+        padding-top: 2px;
+        border-radius: 4px;
+    }
+
+    &:nth-last-of-type(-n+2) {
+        z-index: 0;
+    }
+`
+
+export const DamageIndicator = styled.div.attrs((props: any) => props)`
+    position: absolute;
+    background: #e2baba;
+    left: 0;
+    bottom: 0;
+    width: ${props => `${props.damage}%`};
+    height: 2px;
+    border-radius: 20px;
+    z-index: 1;
+    transition: all .3s;
+
+    &:hover {
+        &:before {
+            opacity: 1;
+            display: flex;
+        }
+    }
+
+    &:before {
+        content: 'Indicador de dano';
+        opacity: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        background: #000000e3;
+        color: white;
+        text-align: center;
+        padding: 4px 6px 5px;
+        width: 96px;
+        border-radius: 4px;
+        transform: translateY(2px);
     }
 `
 

@@ -19,7 +19,7 @@ export const MyPokemons = (props: any) => {
     }, [props.data])
 
     return (
-        <Box>
+        <Box direction={props.orientation}>
             <ul>
                 {pokemons.map((pkm: any, index: number) => (
                     <li key={index} onClick={() => handleSelect(pkm)}>

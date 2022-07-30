@@ -3,6 +3,7 @@ import { PokemonType, UserStateType } from "../store/types"
 export const mocks = {
     pokemon: {
         id: 0,
+        pokedex_id: 0,
         name: '',
         level: 1,
         image: '',

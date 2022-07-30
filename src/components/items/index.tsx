@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { setExplore, setTurn } from "../../store/reducers/global";
+import { setBattleWin, setExplore, setTurn } from "../../store/reducers/global";
 import { setCurrentHpPokemonEnemy } from "../../store/reducers/pokemonEnemy";
 import { setUserNewPokemon } from "../../store/reducers/user";
 import { getRandomIntFromInterval } from "../../utils/general";
@@ -34,6 +34,7 @@ export const Items = (props: any) => {
         if (pkmCatched) {
             dispatch(setUserNewPokemon(enemy));
             dispatch(setExplore(false));
+            dispatch(setBattleWin(true));
             setPkmCatch(false);
         }
     }, [pkmCatched])

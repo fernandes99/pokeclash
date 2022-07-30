@@ -43,6 +43,6 @@ export const requests = {
 
             return await fetch(url, { mode: 'cors' })
                 .then(res => res.json());
-        },
+        }
     },
 }

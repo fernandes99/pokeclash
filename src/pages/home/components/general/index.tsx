@@ -21,7 +21,7 @@ export const SelectPokemonToBattle:React.FC = () => {
     return (
         <SelectPokemonBlock>
             <Text>Selecione um pokemon:</Text>
-            <MyPokemons data={user.pokemons} isSelectToBattle={true} />
+            <MyPokemons orientation={'horizontal'} data={user.pokemons} isSelectToBattle={true} />
         </SelectPokemonBlock>
     )
 }

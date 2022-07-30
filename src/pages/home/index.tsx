@@ -21,7 +21,7 @@ import { resetPokemonEnemy, setPokemonEnemy } from "../../store/reducers/pokemon
 import { setUserData, updateUserPokemon } from "../../store/reducers/user";
 
 // Utils
-import { getPokemon, getRandomIntFromInterval } from "../../utils/general";
+import { getPokemon, getRandomIntFromInterval, playSoundPkm } from "../../utils/general";
 import { storage } from "../../utils/storage";
 
 // Style
@@ -49,13 +49,14 @@ export const HomePage = () => {
         const pokemon = await getPokemon();
 
         dispatch(setPokemonEnemy(pokemon));
-        dispatch(resetBattleLog(true));
         dispatch(blockActions(false));
+        playSoundPkm(pokemon.pokedex_id);
     }
 
     const resetAllBattleStates = () => {
         dispatch(resetPokemonAllied(true));
         dispatch(resetPokemonEnemy(true));
+        dispatch(resetBattleLog(true));
     }
 
     useEffect(() => {
@@ -70,13 +71,12 @@ export const HomePage = () => {
     useEffect(() => {
         if (global.turn === 'enemy') {
             dispatch(setTurn('allied'));
-            actions.attack('allied', dispatch, enemy, allied, user, enemy.moves[getRandomIntFromInterval(0, enemy.moves.length - 1)].move);
+            actions.attack('allied', dispatch, enemy, allied, user, enemy.moves[getRandomIntFromInterval(0, enemy.moves.length - 1)]);
         }
     }, [global.turn])
 
     useEffect(() => {
-        if (!global.explore) resetAllBattleStates();
-        else setEnemy();
+        if (global.explore) setEnemy();
     }, [global.explore]);
 
     useEffect(() => {
@@ -85,6 +85,7 @@ export const HomePage = () => {
             dispatch(updateUserPokemon(allied));
             dispatch(setBattleWin(false));
             dispatch(setBattleLose(false));
+            resetAllBattleStates();
         }
     }, [global.battleWin, global.battleLose]);
 
@@ -93,7 +94,7 @@ export const HomePage = () => {
             <Header />
             <Container>
                 <Content>
-                    <Box title="Arena de Batalha" id='battle'>
+                    <Box id='battle'>
                         {global.explore
                             ? <Block>
                                 {allied?.id ? <Pokemon data={allied} /> : <SelectPokemonToBattle />}
@@ -103,19 +104,19 @@ export const HomePage = () => {
                         }
                     </Box>
 
-                    <Box title="Estatísticas" id='statistics'>
+                    <Box id='statistics'>
                         {user && <Statistics data={user} />}
                     </Box>
 
-                    <Box title="Itens" id='items'>
+                    <Box id='items'>
                         {user && <Items data={user.items} />}
                     </Box>
 
-                    <Box title="Pokemons" id='pokemons'>
+                    <Box id='pokemons'>
                         {user && <MyPokemons data={user.pokemons} />}
                     </Box>
 
-                    <Box title="Informações da Batalha" id='logs'>
+                    <Box id='logs'>
                         <BattleLogs logs={battleLogs.logs} />
                     </Box>
                 </Content>

@@ -11,9 +11,9 @@ export const Box = styled.div`
 `
 
 export const Text = styled.span`
-    font-size: 16px;
+    font-size: 14px;
     line-height: 130%;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
     text-align: center;
 `
 
@@ -38,7 +38,7 @@ export const SelectPokemonBlock = styled.div`
     align-items: flex-start;
     background-color: var(--gray-lighter);
     border-radius: 8px;
-    padding: 16px;
+    padding: 12px;
     height: 100%;
     
 `
