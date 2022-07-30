@@ -94,7 +94,7 @@ export const HomePage = () => {
             <Header />
             <Container>
                 <Content>
-                    <Box id='battle'>
+                    <Box title="Arena de Batalha" id='battle'>
                         {global.explore
                             ? <Block>
                                 {allied?.id ? <Pokemon data={allied} /> : <SelectPokemonToBattle />}
@@ -104,19 +104,19 @@ export const HomePage = () => {
                         }
                     </Box>
 
-                    <Box id='statistics'>
+                    <Box title="Estatísticas" id='statistics'>
                         {user && <Statistics data={user} />}
                     </Box>
 
-                    <Box id='items'>
+                    <Box title="Itens" id='items'>
                         {user && <Items data={user.items} />}
                     </Box>
 
-                    <Box id='pokemons'>
+                    <Box title="Pokemons" id='pokemons'>
                         {user && <MyPokemons data={user.pokemons} />}
                     </Box>
 
-                    <Box id='logs'>
+                    <Box title="Informações da Batalha" id='logs'>
                         <BattleLogs logs={battleLogs.logs} />
                     </Box>
                 </Content>
