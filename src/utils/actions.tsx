@@ -22,7 +22,9 @@ export const actions:any = {
         };
 
         if (target === 'enemy') {
-            let damage = move.power / 3 + (allied.level) * multiplicatorType(move.type);
+            const multiplicator = multiplicatorType(move.type);
+
+            let damage = move.power / 3 + (allied.level) * multiplicator;
                 damage = getRandomIntFromInterval(damage * 0.5, damage * 1.5);
 
             const current = enemy.status.hp_current - damage;
@@ -30,6 +32,9 @@ export const actions:any = {
             dispatch(setCurrentHpPokemonEnemy(current));
             dispatch(setBattleLog(`{allied} usou ${move.name}`));
             dispatch(setBattleLog(`{allied} causou ${damage} de dano em {enemy}`));
+
+            if (multiplicator === 2) dispatch(setBattleLog(`Isso foi super efetivo!`));
+            if (multiplicator === 0.5) dispatch(setBattleLog(`Isso não foi efetivo!`));
 
             if (current <= 0) {
                 let expGained = allied.xp.base * (enemy.level / allied.level);
@@ -63,10 +68,12 @@ export const actions:any = {
             }
 
             return actions.attack('allied', dispatch, enemy, allied, user, enemy.moves[getRandomIntFromInterval(0, enemy.moves.length - 1)]);
-        }
+        } // REFATORAR. Código repetidos com o target no aliado e enemy: separar por turnos.
 
         if (target === 'allied') {
-            let damage = move.power / 1.5 + (enemy.level) * multiplicatorType(move.type);
+            const multiplicator = multiplicatorType(move.type);
+
+            let damage = move.power / 1.5 + (enemy.level) * multiplicator;
                 damage = getRandomIntFromInterval(damage * 0.5, damage * 1.5);
 
             const current = allied.status.hp_current - damage;
@@ -74,6 +81,9 @@ export const actions:any = {
             dispatch(setCurrentHpPokemonAllied(current));
             dispatch(setBattleLog(`{enemy} usou ${move.name}`));
             dispatch(setBattleLog(`{enemy} causou ${damage} de dano em {allied}`));
+
+            if (multiplicator === 2) dispatch(setBattleLog(`Isso foi super efetivo!`));
+            if (multiplicator === 0.5) dispatch(setBattleLog(`Isso não foi efetivo!`));
 
             if (current <= 0) {
                 let expGained = (allied.xp.base * (enemy.level / allied.level)) / 10;
