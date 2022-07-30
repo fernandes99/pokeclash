@@ -57,6 +57,12 @@ body {
     border-right: 5px solid transparent;
 }
 
+@media (max-width: 860px) {
+    #app {
+        border-radius: 0;
+    }
+}
+
 @media (max-width: 440px) {
     #app {
         max-height: 100%;
