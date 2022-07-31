@@ -3,6 +3,7 @@ import { setExplore } from "../store/reducers/global";
 import { resetPokemonAllied } from "../store/reducers/pokemonAllied";
 import { resetUserData } from "../store/reducers/user";
 import { colors } from "./colors";
+import { pokemonsBase } from "./pokemonsBase";
 import { requests } from "./requests";
 import { typeInBR } from "./translate";
 
@@ -46,8 +47,11 @@ export const resetAllStates = (dispatch: any) => {
 
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(() => resolve(true), ms));
 
-export const getPokemon = async (name?: string, level?: number) => {
-    let base = await requests.get.pokemon(name ? name : '');
+export const getPokemon = async (name?: string, level?: number, customId?: number) => {
+    const filter = pokemonsBase.filter((item: any) => (item.pokedex_id >= 649 && item.capture_rate >= 100));
+    const random = getRandomIntFromInterval(0, filter.length);
+
+    let base = await requests.get.pokemon(name ? name : '', filter[random].pokedex_id);
     let pokemon = await requests.get.specie(base.id);
     let evolution = await requests.get.evolution(pokemon.evolution_chain?.url);
 
@@ -59,7 +63,7 @@ export const getPokemon = async (name?: string, level?: number) => {
         evolution: {}
     };
 
-    pokemon.id = getRandomValue();
+    pokemon.id = customId ? customId : getRandomValue();
     pokemon.pokedex_id = base.id;
     pokemon.name = capitalize(pokemon.name);
     pokemon.level = level ? level : getRandomIntFromInterval(1, 10);
@@ -69,9 +73,10 @@ export const getPokemon = async (name?: string, level?: number) => {
     pokemon.status.hp_percentage = 100;
     pokemon.xp.base = pokemon.base_experience;
     pokemon.xp.next_level = pokemon.xp.base * pokemon.level;
-    pokemon.xp.current = getRandomIntFromInterval(0, pokemon.base_experience);
-    pokemon.capture_rate = pkmRateInPercentage(pokemon.capture_rate) / 2;
+    pokemon.xp.current = getRandomIntFromInterval(0, pokemon.xp.next_level);
+    pokemon.capture_rate = pkmRateInPercentage(pokemon.capture_rate) / 4;
     pokemon.color = pokemon.color.name;
+    pokemon.all_moves = pokemon.moves;
 
     const filterMoves = pokemon.moves.filter((move: any) => {
         const complienceLevel = move.version_group_details[0].level_learned_at <= pokemon.level;
@@ -102,7 +107,7 @@ export const getPokemon = async (name?: string, level?: number) => {
     }));
     
     if (evolution?.chain) {
-        await new Promise((resolve, reject) => {
+        await new Promise(resolve => {
             let current = evolution.chain;
 
             while (current) {

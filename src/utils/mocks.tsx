@@ -8,6 +8,7 @@ export const mocks = {
         level: 1,
         image: '',
         color: '',
+        all_moves: [],
         moves: [],
         types: [],
         capture_rate: 0,
@@ -22,6 +23,7 @@ export const mocks = {
             hp_percentage: 0,
         },
         evolution: {
+            min_level: 0,
             to: {
                 name: '',
                 url: '',

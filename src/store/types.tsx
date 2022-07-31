@@ -26,6 +26,7 @@ export type PokemonType = {
     level: number,
     image: string,
     color: string,
+    all_moves: Array<any>,
     moves: Array<any>,
     types: Array<any>,
     capture_rate: number,
@@ -39,7 +40,8 @@ export type PokemonType = {
         hp_current: number,
         hp_percentage: number,
     },
-    evolution?: {
+    evolution: {
+        min_level: number,
         to: {
             name: string,
             url: string,

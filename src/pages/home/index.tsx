@@ -15,7 +15,7 @@ import { Header } from "./components/header";
 // Store
 import { RootState } from "../../store";
 import { resetBattleLog } from "../../store/reducers/battleLogs";
-import { blockActions, setBattleLose, setBattleWin, setExplore, setTurn } from "../../store/reducers/global";
+import { blockActions, setBattleLose, setBattleWin, setExplore, setLevelUped, setTurn } from "../../store/reducers/global";
 import { resetPokemonAllied } from "../../store/reducers/pokemonAllied";
 import { resetPokemonEnemy, setPokemonEnemy } from "../../store/reducers/pokemonEnemy";
 import { setUserData, updateUserPokemon } from "../../store/reducers/user";
@@ -58,6 +58,9 @@ export const HomePage = () => {
         dispatch(resetPokemonEnemy(true));
         dispatch(resetBattleLog(true));
         dispatch(setExplore(false));
+        dispatch(setBattleWin(false));
+        dispatch(setBattleLose(false));
+        dispatch(setLevelUped(false));
     }
 
     useEffect(() => {
@@ -82,11 +85,25 @@ export const HomePage = () => {
 
     useEffect(() => {
         if (global.battleWin || global.battleLose) {
-            
-            dispatch(updateUserPokemon(allied));
-            dispatch(setBattleWin(false));
-            dispatch(setBattleLose(false));
-            resetAllBattleStates();
+            let pokemon = allied;
+
+            const handleStatePokemon = new Promise(async resolve => {
+                if (global.levelUped) {
+                    alert('Parabéns seu pokemon subiu de nivel!');
+
+                    if (allied.level >= allied.evolution.min_level) {
+                        alert('Parabéns seu pokemon evoluiu!');
+                        pokemon = await getPokemon(allied.evolution.to.name, allied.level, allied.id);
+                    }
+                }
+
+                resolve(pokemon);
+            });
+
+            handleStatePokemon.then((res: any) => {
+                dispatch(updateUserPokemon(res));
+                resetAllBattleStates();
+            });
         }
     }, [global.battleWin, global.battleLose]);
 
