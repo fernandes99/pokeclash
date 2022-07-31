@@ -37,11 +37,11 @@ export const actions:any = {
             if (multiplicator === 0.5) dispatch(setBattleLog(`Isso não foi efetivo!`));
 
             if (current <= 0) {
-                let expGained = allied.xp.base * (enemy.level / allied.level);
-                    expGained = getRandomIntFromInterval(expGained / 1.5, expGained * 1.5);
+                let expGained = (allied.xp.next_level * 0.2) * (enemy.level / allied.level);
+                    expGained = getRandomIntFromInterval(expGained * 0.5, expGained * 1.5);
                     expGained = Math.round(expGained);
 
-                let moneyGained = 20 * enemy.level / allied.level;
+                let moneyGained = 50 * enemy.level / allied.level;
                     moneyGained = getRandomIntFromInterval(moneyGained / 1.5, moneyGained * 1.5);
                     moneyGained = Math.round(moneyGained);
 
@@ -85,11 +85,11 @@ export const actions:any = {
             if (multiplicator === 0.5) dispatch(setBattleLog(`Isso não foi efetivo!`));
 
             if (current <= 0) {
-                let expGained = (allied.xp.base * (enemy.level / allied.level)) / 10;
-                    expGained = getRandomIntFromInterval(expGained / 1.5, expGained * 1.5);
+                let expGained = ((allied.xp.next_level * 0.2) * (enemy.level / allied.level)) / 10;
+                    expGained = getRandomIntFromInterval(expGained * 0.5, expGained * 1.5);
                     expGained = Math.round(expGained);
 
-                let moneyLossed = Math.round((10 * enemy.level / allied.level) * -0.2);
+                let moneyLossed = Math.round((10 * allied.level / enemy.level) * -0.2);
                     moneyLossed = getRandomIntFromInterval(moneyLossed / 1.5, moneyLossed * 1.5);
                     moneyLossed = Math.round(moneyLossed);
 
