@@ -10,6 +10,7 @@ export const Box = styled.div`
     ul {
         display: flex;
         align-items: center;
+        overflow: overlay;
 
         li button {
             color: white;

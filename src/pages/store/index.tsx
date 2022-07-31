@@ -66,9 +66,9 @@ export const StorePage = () => {
                             <Label>Pokebola</Label>
                             <Price>R$ {values.pokeball}</Price>
                             <Action>
-                                <button onClick={() => setPokeballs(pokeballs + 1)}>+</button>
-                                <input type="number" value={pokeballs} onChange={(e: any) => setPokeballs(e.target.value)} />
                                 <button onClick={() => setPokeballs(pokeballs - 1)}>-</button>
+                                <input type="number" value={pokeballs} onChange={(e: any) => setPokeballs(e.target.value)} />
+                                <button onClick={() => setPokeballs(pokeballs + 1)}>+</button>
                             </Action>
                         </Field>
 
@@ -76,9 +76,9 @@ export const StorePage = () => {
                             <Label>Super Pokebola</Label>
                             <Price>R$ {values.super_pokeball}</Price>
                             <Action>
-                                <button onClick={() => {}}>+</button>
-                                <input type="number" defaultValue={0} />
                                 <button onClick={() => {}}>-</button>
+                                <input type="number" defaultValue={0} />
+                                <button onClick={() => {}}>+</button>
                             </Action>
                         </Field>
 
@@ -86,9 +86,9 @@ export const StorePage = () => {
                             <Label>Mega Pokebola</Label>
                             <Price>R$ {values.mega_pokeball}</Price>
                             <Action>
-                                <button onClick={() => {}}>+</button>
-                                <input type="number" defaultValue={0} />
                                 <button onClick={() => {}}>-</button>
+                                <input type="number" defaultValue={0} />
+                                <button onClick={() => {}}>+</button>
                             </Action>
                         </Field>
 
@@ -96,9 +96,9 @@ export const StorePage = () => {
                             <Label>Poção</Label>
                             <Price>R$ {values.potion}</Price>
                             <Action>
-                                <button onClick={() => setPotions(potions + 1)}>+</button>
-                                <input type="number" value={potions} onChange={(e: any) => setPotions(e.target.value)}/>
                                 <button onClick={() => setPotions(potions - 1)}>-</button>
+                                <input type="number" value={potions} onChange={(e: any) => setPotions(e.target.value)}/>
+                                <button onClick={() => setPotions(potions + 1)}>+</button>
                             </Action>
                         </Field>
 

@@ -25,8 +25,9 @@ const pokemonAllied = createSlice({
             state.xp.current = state.xp.current + action.payload;
 
             while (state.xp.current >= state.xp.next_level) {
-                state.xp.next_level = state.xp.base * state.level + 1;
-                state.level += 1;
+                state.xp.next_level = state.xp.base * state.level + 2;
+                state.xp.current = state.xp.base * state.level + 1;
+                state.level = state.level + 1;
             }
         },
 

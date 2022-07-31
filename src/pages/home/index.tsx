@@ -91,7 +91,7 @@ export const HomePage = () => {
                 if (global.levelUped) {
                     alert('Parabéns seu pokemon subiu de nivel!');
 
-                    if (allied.level >= allied.evolution.min_level) {
+                    if (allied.evolution.min_level && allied.level >= allied.evolution.min_level) {
                         alert('Parabéns seu pokemon evoluiu!');
                         pokemon = await getPokemon(allied.evolution.to.name, allied.level, allied.id);
                     }

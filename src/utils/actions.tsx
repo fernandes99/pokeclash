@@ -4,10 +4,10 @@ import { setCurrentHpPokemonAllied, addXpPokemonAllied } from "../store/reducers
 import { setCurrentHpPokemonEnemy } from "../store/reducers/pokemonEnemy";
 import { setUserData } from "../store/reducers/user";
 import { PokemonType, UserStateType } from "../store/types";
-import { getPercentage, getRandomIntFromInterval } from "./general";
+import { getPercentage, getRandomIntFromInterval, sleep } from "./general";
 
 export const actions:any = {
-    attack: (target: 'enemy' | 'allied', dispatch: any, enemy: PokemonType, allied: PokemonType, user: UserStateType, move: any) => {
+    attack: async (target: 'enemy' | 'allied', dispatch: any, enemy: PokemonType, allied: PokemonType, user: UserStateType, move: any) => {
         dispatch(blockActions(true));
 
         const multiplicatorType = (type: any) => {
@@ -22,6 +22,8 @@ export const actions:any = {
         };
 
         if (target === 'enemy') {
+            await sleep(100);
+
             const multiplicator = multiplicatorType(move.type);
 
             let damage = move.power / 4 + (allied.level) * multiplicator;
@@ -37,7 +39,8 @@ export const actions:any = {
             if (multiplicator === 0.5) dispatch(setBattleLog(`Isso não foi efetivo!`));
 
             if (current <= 0) {
-                let expGained = ((allied.xp.next_level - allied.xp.current) * 0.2) * (enemy.level / allied.level);
+                const xpGapCurrentLevel = allied.xp.next_level - (allied.level * allied.xp.base);
+                let expGained = (xpGapCurrentLevel * 0.2) * (enemy.level / allied.level);
                     expGained = getRandomIntFromInterval(expGained * 0.5, expGained * 1.5);
                     expGained = Math.round(expGained);
 
@@ -61,7 +64,7 @@ export const actions:any = {
 
                 dispatch(setUserData(userData));
 
-                alert(`Você derrotou ${enemy.name} e seu ${allied.name} ganhou ${expGained} de experiencia`);
+                alert(`Você derrotou ${enemy.name} e seu ${allied.name} ganhou ${expGained} de experiência`);
                 alert(`Parabéns, você ganhou R$ ${moneyGained}`);
 
                 dispatch(setBattleWin(true));
@@ -93,7 +96,7 @@ export const actions:any = {
                     expGained = getRandomIntFromInterval(expGained * 0.5, expGained * 1.5);
                     expGained = Math.round(expGained);
 
-                let moneyLossed = Math.round((20 * allied.level / enemy.level) * -0.2);
+                let moneyLossed = Math.round((20 * allied.level / enemy.level) * 0.2);
                     moneyLossed = getRandomIntFromInterval(moneyLossed * 0.5, moneyLossed * 1.5);
                     moneyLossed = Math.round(moneyLossed);
 
@@ -113,7 +116,7 @@ export const actions:any = {
 
                 dispatch(setUserData(userData));
 
-                alert(`Você foi derrotado por ${enemy.name} e seu ${allied.name} ganhou apenas ${expGained} de experiencia`);
+                alert(`Você foi derrotado por ${enemy.name} e seu ${allied.name} ganhou apenas ${expGained} de experiência`);
                 alert(`Você perdeu R$${Math.abs(moneyLossed)}`);
 
                 dispatch(setBattleLose(true));

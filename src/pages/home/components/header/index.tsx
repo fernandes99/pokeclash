@@ -17,6 +17,12 @@ export const Header = () => {
                     <button onClick={() => navigate('/')}>Explorar</button>
                 </li>
                 <li>
+                    <button onClick={() => navigate('/pokedex')}>Torneios</button>
+                </li>
+                <li>
+                    <button onClick={() => navigate('/pokedex')}>Ginásios</button>
+                </li>
+                <li>
                     <button onClick={() => navigate('/loja')}>Loja</button>
                 </li>
                 <li>
