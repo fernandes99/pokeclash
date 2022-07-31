@@ -127,7 +127,7 @@ export const HomePage = () => {
                     </Box>
 
                     <Box title="Itens" id='items'>
-                        {user && <Items data={user.items} />}
+                        {user && <Items data={user.items} money={user.money} />}
                     </Box>
 
                     <Box title="Pokemons" id='pokemons'>

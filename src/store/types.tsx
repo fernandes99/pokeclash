@@ -8,7 +8,7 @@ export type UserStateType = {
     winRate: number,
     items: {
         pokeballs: number,
-        potions: 0,
+        potions: number,
     },
     pokemons?: Array<PokemonType>,
     pokedex?: [

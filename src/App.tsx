@@ -10,6 +10,7 @@ import { Loading } from "./components/loading";
 // Pages
 import { WelcomePage } from "./pages/welcome/index";
 import { HomePage } from "./pages/home";
+import { StorePage } from "./pages/store";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ function App() {
         <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/bemvindo' element={<WelcomePage />} />
+            <Route path='/loja' element={<StorePage />} />
         </Routes>
       </Router>
 

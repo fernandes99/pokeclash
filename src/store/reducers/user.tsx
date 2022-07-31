@@ -39,9 +39,12 @@ const user = createSlice({
         },
         resetUserData (state: UserStateType, action: any) {
             Object.assign(state, mocks.user);
+        },
+        setUserPokeball (state: UserStateType, action: any) {
+            state.items.pokeballs = action.payload;
         }
     }
 })
 
-export const { setUserData, setUserName, setUserNewPokemon, resetUserData, setUserMoney, updateUserPokemon } = user.actions;
+export const { setUserData, setUserName, setUserNewPokemon, resetUserData, setUserMoney, updateUserPokemon, setUserPokeball } = user.actions;
 export default user.reducer;

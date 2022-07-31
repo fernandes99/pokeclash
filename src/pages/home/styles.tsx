@@ -32,7 +32,7 @@ export const Block = styled.div`
 export const Content = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 185px 85px 200px;
+    grid-template-rows: 160px 100px 200px;
     grid-template-areas: "battle battle statistics"
                          "battle battle items"
                          "logs   logs   pokemons";

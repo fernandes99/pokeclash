@@ -17,11 +17,6 @@ export const Statistics = (props: any) => {
                 </li>
 
                 <li>
-                    <span>Dinheiro:</span>
-                    <span>R$ {stats.money}</span>
-                </li>
-
-                <li>
                     <span>Lutas:</span>
                     <span>{stats.fights}</span>
                 </li>
