@@ -48,3 +48,10 @@ export type PokemonType = {
         },
     },
 }
+
+export type GetPokemonPropsType = {
+    name?: string,
+    level?: number,
+    id?: number,
+    customMoveLevel?: number
+}

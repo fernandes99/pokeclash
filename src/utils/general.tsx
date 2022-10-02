@@ -2,6 +2,7 @@ import { resetBattleLog } from "../store/reducers/battleLogs";
 import { setExplore } from "../store/reducers/global";
 import { resetPokemonAllied } from "../store/reducers/pokemonAllied";
 import { resetUserData } from "../store/reducers/user";
+import { GetPokemonPropsType } from "../store/types";
 import { colors } from "./colors";
 import { pokemonsBase } from "./pokemonsBase";
 import { requests } from "./requests";
@@ -47,7 +48,10 @@ export const resetAllStates = (dispatch: any) => {
 
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(() => resolve(true), ms));
 
-export const getPokemon = async (name?: string, level?: number, customId?: number) => {
+export const getPokemon = async (props?: GetPokemonPropsType) => {
+    if (!props) props = {};
+
+    const { name, level, id, customMoveLevel } = props;
     const filter = pokemonsBase.filter((item: any) => (item.pokedex_id >= 649 && item.capture_rate >= 100));
     const random = getRandomIntFromInterval(0, filter.length);
 
@@ -63,7 +67,7 @@ export const getPokemon = async (name?: string, level?: number, customId?: numbe
         evolution: {}
     };
 
-    pokemon.id = customId ? customId : getRandomValue();
+    pokemon.id = id ? id : getRandomValue();
     pokemon.pokedex_id = base.id;
     pokemon.name = capitalize(pokemon.name);
     pokemon.level = level ? level : getRandomIntFromInterval(1, 10);
@@ -79,12 +83,13 @@ export const getPokemon = async (name?: string, level?: number, customId?: numbe
     pokemon.all_moves = pokemon.moves;
 
     const filterMoves = pokemon.moves.filter((move: any) => {
-        const complienceLevel = move.version_group_details[0].level_learned_at <= pokemon.level;
+        const levelToFilter = customMoveLevel || pokemon.level;
+        const complienceLevel = move.version_group_details[0].level_learned_at <= levelToFilter;
         const complienceMethod = move.version_group_details[0].move_learn_method.name == 'level-up';
 
         return complienceMethod && complienceLevel;
     });
-    let randomMove = getRandomIntFromInterval(0, filterMoves.length - 4);
+    const randomMove = getRandomIntFromInterval(0, filterMoves.length - 4);
     pokemon.moves = filterMoves.slice(randomMove, randomMove + 4);
     pokemon.moves = await Promise.all(pokemon.moves.map(async (item: any) => {
         const data = requests.get.move(item.move.name).then(async res => {

@@ -410,11 +410,6 @@ export const pokemonsBase = [
         "capture_rate": 255
     },
     {
-        "pokedex_id": 890,
-        "name": "Eternatus",
-        "capture_rate": 255
-    },
-    {
         "pokedex_id": 29,
         "name": "Nidoran♀",
         "capture_rate": 235
@@ -4337,6 +4332,11 @@ export const pokemonsBase = [
     {
         "pokedex_id": 640,
         "name": "Virizion",
+        "capture_rate": 3
+    },
+    {
+        "pokedex_id": 890,
+        "name": "Eternatus",
         "capture_rate": 3
     },
     {

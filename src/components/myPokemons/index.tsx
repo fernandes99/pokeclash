@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
+import { openModal, setPokemonGlobal } from "../../store/reducers/global";
 import { setPokemonAllied } from "../../store/reducers/pokemonAllied";
 import { colors } from "../../utils/colors";
 import { Box, Info, Small, Text, Image } from "./styles";
@@ -10,8 +11,11 @@ export const MyPokemons = (props: any) => {
 
     const handleSelect = (pkm: any) => {
         if (props.isSelectToBattle) {
-            dispatch(setPokemonAllied(pkm));
+            return dispatch(setPokemonAllied(pkm));
         }
+
+        dispatch(setPokemonGlobal(pkm));
+        dispatch(openModal('pokemon_data'));
     }
 
     useEffect(() => {

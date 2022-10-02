@@ -27,6 +27,7 @@ import { storage } from "../../utils/storage";
 // Style
 import { Box, Content, Block } from "./styles"
 import { actions } from "../../utils/actions";
+import { Modal } from "../../components/modal";
 
 export const HomePage = () => {
     const navigate = useNavigate();
@@ -93,7 +94,11 @@ export const HomePage = () => {
 
                     if (allied.evolution.min_level && allied.level >= allied.evolution.min_level) {
                         alert('Parabéns seu pokemon evoluiu!');
-                        pokemon = await getPokemon(allied.evolution.to.name, allied.level, allied.id);
+                        pokemon = await getPokemon({
+                            name: allied.evolution.to.name,
+                            level: allied.level,
+                            id: allied.id
+                        });
                     }
                 }
 
@@ -139,6 +144,8 @@ export const HomePage = () => {
                     </Box>
                 </Content>
             </Container>
+
+            <Modal />
         </>
     )
 }

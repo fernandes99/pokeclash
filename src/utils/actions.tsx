@@ -39,8 +39,8 @@ export const actions:any = {
             if (multiplicator === 0.5) dispatch(setBattleLog(`Isso não foi efetivo!`));
 
             if (current <= 0) {
-                const xpGapCurrentLevel = allied.xp.next_level - (allied.level * allied.xp.base);
-                let expGained = (xpGapCurrentLevel * 0.2) * (enemy.level / allied.level);
+                // const xpGapCurrentLevel = allied.xp.next_level - (allied.level * allied.xp.base);
+                let expGained = (allied.xp.base * 0.6) * (enemy.level / allied.level);
                     expGained = getRandomIntFromInterval(expGained * 0.5, expGained * 1.5);
                     expGained = Math.round(expGained);
 
