@@ -4,7 +4,7 @@ import { setCurrentHpPokemonAllied, addXpPokemonAllied } from "../store/reducers
 import { setCurrentHpPokemonEnemy } from "../store/reducers/pokemonEnemy";
 import { setUserData } from "../store/reducers/user";
 import { PokemonType, UserStateType } from "../store/types";
-import { getPercentage, getRandomIntFromInterval, sleep } from "./general";
+import { getWinRate, getRandomIntFromInterval, sleep } from "./general";
 
 export const actions:any = {
     attack: async (target: 'enemy' | 'allied', dispatch: any, enemy: PokemonType, allied: PokemonType, user: UserStateType, move: any) => {
@@ -40,11 +40,11 @@ export const actions:any = {
 
             if (current <= 0) {
                 // const xpGapCurrentLevel = allied.xp.next_level - (allied.level * allied.xp.base);
-                let expGained = (allied.xp.base * 0.6) * (enemy.level / allied.level);
+                let expGained = (allied.xp.base * 0.7) * (enemy.level / allied.level);
                     expGained = getRandomIntFromInterval(expGained * 0.5, expGained * 1.5);
                     expGained = Math.round(expGained);
 
-                let moneyGained = 50 * enemy.level / allied.level;
+                let moneyGained = 80 * enemy.level / allied.level;
                     moneyGained = getRandomIntFromInterval(moneyGained * 0.5, moneyGained * 1.5);
                     moneyGained = Math.round(moneyGained);
 
@@ -59,7 +59,7 @@ export const actions:any = {
                     fights: user.fights + 1,
                     wins: user.wins + 1,
                     losses: user.losses,
-                    winRate: getPercentage(user.wins + 1, user.losses)
+                    winRate: getWinRate(user.wins + 1, user.losses)
                 }
 
                 dispatch(setUserData(userData));
@@ -96,7 +96,7 @@ export const actions:any = {
                     expGained = getRandomIntFromInterval(expGained * 0.5, expGained * 1.5);
                     expGained = Math.round(expGained);
 
-                let moneyLossed = Math.round((20 * allied.level / enemy.level) * 0.2);
+                let moneyLossed = Math.round((40 * allied.level / enemy.level) * 0.2)
                     moneyLossed = getRandomIntFromInterval(moneyLossed * 0.5, moneyLossed * 1.5);
                     moneyLossed = Math.round(moneyLossed);
 
@@ -111,7 +111,7 @@ export const actions:any = {
                     fights: user.fights + 1,
                     wins: user.wins,
                     losses: user.losses + 1,
-                    winRate: getPercentage(user.wins, user.losses + 1)
+                    winRate: getWinRate(user.wins, user.losses + 1)
                 }
 
                 dispatch(setUserData(userData));

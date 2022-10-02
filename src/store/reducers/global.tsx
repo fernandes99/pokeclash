@@ -14,7 +14,7 @@ const global = createSlice({
         levelUped: false,
         pokemon: {} as PokemonType,
         modal: {
-            actived: true,
+            actived: false,
             type: 'TODO',
         } as ModalPropsType,
     },

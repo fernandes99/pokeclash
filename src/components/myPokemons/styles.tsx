@@ -25,7 +25,7 @@ export const Box = styled.div.attrs((props: any) => props)`
 
         li {
             display: grid;
-            grid-template-columns: 64px 1fr;
+            grid-template-columns: 64px 120px;
             cursor: pointer;
             transition: all .2s;
 
@@ -57,4 +57,31 @@ export const Small = styled.span`
 
 export const Image = styled.img`
     background: radial-gradient(${props => `${props.color}80`} 20%, transparent 60%);
+`
+
+export const XpBar = styled.div.attrs((props: any) => props)`
+    position: relative;
+    width: 100%;
+    height: 3px;
+    border-radius: 5px;
+    background: var(--gray-light);
+    margin-top: 4px;
+    transition: all .3s;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: ${props => `${props.percentage}%`};
+        height: 100%;
+        background:
+            ${props => {
+                    if (props.percentage >= 80) return '#a6b0be';
+                    return '#c5cedd';
+                }
+            };
+        border-radius: 5px;
+        transition: all .3s;
+    }
 `

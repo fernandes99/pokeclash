@@ -6,7 +6,6 @@ import { Box, InfoPKM, Overlay } from "./styles"
 export const Modal = () => {
     const dispatch = useDispatch();
     const global = useSelector((state: RootState) => state.global);
-    console.log(global.pokemon);
 
     return (
         <>

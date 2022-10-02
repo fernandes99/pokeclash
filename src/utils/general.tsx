@@ -35,6 +35,11 @@ export const getPercentage = (current: number, total: number) => {
     return result == Infinity ? 100 : result;
 }
 
+export const getWinRate = (win: number, loss: number) => {
+    const rate = parseFloat(Math.round(win / (win + loss) * 100).toFixed(2));
+    return rate;
+}
+
 export const pkmRateInPercentage = (rate: number) => {
 	return parseFloat(((100 * rate) / 255).toFixed(2));
 }
