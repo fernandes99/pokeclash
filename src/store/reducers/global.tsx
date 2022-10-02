@@ -15,7 +15,7 @@ const global = createSlice({
         pokemon: {} as PokemonType,
         modal: {
             actived: true,
-            type: 'pokemon_data',
+            type: 'TODO',
         } as ModalPropsType,
     },
     reducers: {
