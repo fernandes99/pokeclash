@@ -27,7 +27,7 @@ export const Items = (props: any) => {
 
         console.log('Rate:', enemy.capture_rate);
 
-        if (enemy.capture_rate >= random) {
+        if (enemy.capture_rate >= 0) {
             alert(`Parabéns, você conseguiu capturar ${enemy.name}`);
             dispatch(setCurrentHpPokemonEnemy(enemy.status.hp_total));
             dispatch(setCurrentHpPokemonAllied(allied.status.hp_total));

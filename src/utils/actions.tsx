@@ -26,7 +26,7 @@ export const actions:any = {
 
             const multiplicator = multiplicatorType(move.type);
 
-            let damage = move.power / 4 + (allied.level) * multiplicator;
+            let damage = move.power / 4 + (allied.level) * multiplicator * 20;
                 damage = getRandomIntFromInterval(damage * 0.5, damage * 1.5);
 
             const current = enemy.status.hp_current - damage;
@@ -40,7 +40,7 @@ export const actions:any = {
 
             if (current <= 0) {
                 // const xpGapCurrentLevel = allied.xp.next_level - (allied.level * allied.xp.base);
-                let expGained = (allied.xp.base * 0.7) * (enemy.level / allied.level);
+                let expGained = (allied.xp.base * 0.7) * (enemy.level / allied.level) * 10;
                     expGained = getRandomIntFromInterval(expGained * 0.5, expGained * 1.5);
                     expGained = Math.round(expGained);
 

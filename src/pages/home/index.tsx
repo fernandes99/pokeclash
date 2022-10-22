@@ -1,3 +1,4 @@
+import { message } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +29,9 @@ import { storage } from "../../utils/storage";
 import { Box, Content, Block } from "./styles"
 import { actions } from "../../utils/actions";
 import { Modal } from "../../components/modal";
+import { requests } from "../../utils/requests";
+import { colors } from "../../utils/colors";
+import { typeInBR } from "../../utils/translate";
 
 export const HomePage = () => {
     const navigate = useNavigate();
@@ -92,8 +96,53 @@ export const HomePage = () => {
                 if (global.levelUped) {
                     alert('Parabéns seu pokemon subiu de nivel!');
 
+                    const newMoves = pokemon.all_moves.filter((data: any) => {
+                        const complienceLevel = data.version_group_details[0].level_learned_at <= pokemon.level;
+                        const complienceMethod = data.version_group_details[0].move_learn_method.name == 'level-up';
+                        const alreadyLearn = pokemon.moves.some((current: any) => current.name === data.move.name);
+                
+                        return complienceMethod && complienceLevel && !alreadyLearn;
+                    });
+
+                    if (newMoves.length) {
+                        pokemon = JSON.parse(JSON.stringify(pokemon)); // Redefining prop redux, study more: https://stackoverflow.com/questions/44288164/cannot-assign-to-read-only-property-name-of-object-object-object
+
+                        if (pokemon.moves.length > 3) {
+                            pokemon.moves = pokemon.moves.splice(0, newMoves.length);
+                        }
+
+                        newMoves.forEach((data: any) => {
+                            const move = data.move;
+                            const moves = [...pokemon.moves, move];
+
+                            message.success(`Parabéns! ${pokemon.name} aprendeu ${move.name}`);
+                            pokemon.moves = moves;
+                        })
+
+                        pokemon.moves = await Promise.all(pokemon.moves.map(async (move: any) => {
+                            const data = requests.get.move(move.name).then(async res => {
+                                const type = await requests.get.type(res.type.name);
+                                const power = res.power ? res.power : 10;
+                                const accuracy = res.accuracy ? res.accuracy : 100;
+                    
+                                type.color = colors.type[type.name];
+                                type.name = typeInBR[type.name];
+                    
+                                return {
+                                    name: res.name,
+                                    type: type,
+                                    power: power,
+                                    accuracy: accuracy,
+                                    effects: res.effect_entries
+                                };
+                            });
+                            return data;
+                        }));
+                    }
+
                     if (allied.evolution.min_level && allied.level >= allied.evolution.min_level) {
                         alert('Parabéns seu pokemon evoluiu!');
+
                         pokemon = await getPokemon({
                             name: allied.evolution.to.name,
                             level: allied.level,
@@ -121,7 +170,7 @@ export const HomePage = () => {
                         {global.explore
                             ? <Block>
                                 {allied?.id ? <Pokemon data={allied} /> : <SelectPokemonToBattle />}
-                                {enemy?.id ? <Pokemon data={enemy} isSmall={true} /> : <Spinner align={'center'} size={32}/>}
+                                {enemy?.id ? <Pokemon data={enemy} isSmall={true} /> : <Spinner align={'center'} size={32} />}
                             </Block>
                             : <ExploreBlock />
                         }

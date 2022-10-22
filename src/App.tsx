@@ -12,12 +12,15 @@ import { WelcomePage } from "./pages/welcome/index";
 import { HomePage } from "./pages/home";
 import { StorePage } from "./pages/store";
 
+import { message } from "antd";
+
 function App() {
   const dispatch = useDispatch();
   const global = useSelector((state: RootState) => state.global);
 
   useEffect(() => {
     dispatch(setLoading(false));
+    message.info('TESSTE!');
   }, []);
 
   return (
@@ -30,7 +33,7 @@ function App() {
         </Routes>
       </Router>
 
-      { global.loading && <Loading></Loading> }
+      { global.loading && <Loading /> }
     </>
   );
 }
