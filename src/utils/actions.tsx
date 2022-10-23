@@ -1,3 +1,4 @@
+import { message } from "antd";
 import { setBattleLog } from "../store/reducers/battleLogs";
 import { blockActions, setBattleLose, setBattleWin, setExplore, setLevelUped } from "../store/reducers/global";
 import { setCurrentHpPokemonAllied, addXpPokemonAllied } from "../store/reducers/pokemonAllied";
@@ -26,7 +27,7 @@ export const actions:any = {
 
             const multiplicator = multiplicatorType(move.type);
 
-            let damage = move.power / 4 + (allied.level) * multiplicator * 20;
+            let damage = move.power / 4 + (allied.level) * multiplicator;
                 damage = getRandomIntFromInterval(damage * 0.5, damage * 1.5);
 
             const current = enemy.status.hp_current - damage;
@@ -40,7 +41,7 @@ export const actions:any = {
 
             if (current <= 0) {
                 // const xpGapCurrentLevel = allied.xp.next_level - (allied.level * allied.xp.base);
-                let expGained = (allied.xp.base * 0.7) * (enemy.level / allied.level) * 10;
+                let expGained = (allied.xp.base * 0.7) * (enemy.level / allied.level);
                     expGained = getRandomIntFromInterval(expGained * 0.5, expGained * 1.5);
                     expGained = Math.round(expGained);
 
@@ -64,8 +65,8 @@ export const actions:any = {
 
                 dispatch(setUserData(userData));
 
-                alert(`Você derrotou ${enemy.name} e seu ${allied.name} ganhou ${expGained} de experiência`);
-                alert(`Parabéns, você ganhou R$ ${moneyGained}`);
+                message.success(`Você derrotou ${enemy.name} e seu ${allied.name} ganhou ${expGained} de experiência`);
+                message.info(`Parabéns, você ganhou R$ ${moneyGained}`);
 
                 dispatch(setBattleWin(true));
                 dispatch(blockActions(false));
@@ -116,8 +117,8 @@ export const actions:any = {
 
                 dispatch(setUserData(userData));
 
-                alert(`Você foi derrotado por ${enemy.name} e seu ${allied.name} ganhou apenas ${expGained} de experiência`);
-                alert(`Você perdeu R$${Math.abs(moneyLossed)}`);
+                message.error(`Você foi derrotado por ${enemy.name} e seu ${allied.name} ganhou apenas ${expGained} de experiência`);
+                message.info(`Você perdeu R$${Math.abs(moneyLossed)}`);
 
                 dispatch(setBattleLose(true));
             }

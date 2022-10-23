@@ -94,7 +94,7 @@ export const HomePage = () => {
 
             const handleStatePokemon = new Promise(async resolve => {
                 if (global.levelUped) {
-                    alert('Parabéns seu pokemon subiu de nivel!');
+                    message.success(`Parabéns, ${pokemon.name} subiu de nivel!`);
 
                     const newMoves = pokemon.all_moves.filter((data: any) => {
                         const complienceLevel = data.version_group_details[0].level_learned_at <= pokemon.level;
@@ -107,6 +107,7 @@ export const HomePage = () => {
                     if (newMoves.length) {
                         pokemon = JSON.parse(JSON.stringify(pokemon)); // Redefining prop redux, study more: https://stackoverflow.com/questions/44288164/cannot-assign-to-read-only-property-name-of-object-object-object
 
+                        
                         if (pokemon.moves.length > 3) {
                             pokemon.moves = pokemon.moves.splice(0, newMoves.length);
                         }
@@ -115,7 +116,7 @@ export const HomePage = () => {
                             const move = data.move;
                             const moves = [...pokemon.moves, move];
 
-                            message.success(`Parabéns! ${pokemon.name} aprendeu ${move.name}`);
+                            message.success(`Parabéns, ${pokemon.name} aprendeu ${move.name}`);
                             pokemon.moves = moves;
                         })
 
@@ -141,7 +142,7 @@ export const HomePage = () => {
                     }
 
                     if (allied.evolution.min_level && allied.level >= allied.evolution.min_level) {
-                        alert('Parabéns seu pokemon evoluiu!');
+                        message.success(`Parabéns, ${pokemon.name} evoluiu para ${allied.evolution.to.name}`);
 
                         pokemon = await getPokemon({
                             name: allied.evolution.to.name,

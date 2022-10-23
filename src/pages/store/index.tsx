@@ -1,3 +1,4 @@
+import { message } from "antd"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
@@ -32,7 +33,7 @@ export const StorePage = () => {
 
     const buy = () => {
         if (money > user.money) {
-            return alert(`Você não tem R$ ${money}`);
+            return message.info(`Você não tem R$ ${money}`);
         }
 
         const userData = {
