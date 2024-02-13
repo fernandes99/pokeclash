@@ -40,12 +40,16 @@ export const actions:any = {
             if (multiplicator === 0.5) dispatch(setBattleLog(`Isso não foi efetivo!`));
 
             if (current <= 0) {
+                let MONEY_DELTA = 80;
+                let EXP_DELTA = 0.9;
+
                 // const xpGapCurrentLevel = allied.xp.next_level - (allied.level * allied.xp.base);
-                let expGained = (allied.xp.base * 0.7) * (enemy.level / allied.level);
+
+                let expGained = (allied.xp.base * EXP_DELTA) * (enemy.level / allied.level);
                     expGained = getRandomIntFromInterval(expGained * 0.5, expGained * 1.5);
                     expGained = Math.round(expGained);
 
-                let moneyGained = 80 * enemy.level / allied.level;
+                let moneyGained = MONEY_DELTA * enemy.level / allied.level;
                     moneyGained = getRandomIntFromInterval(moneyGained * 0.5, moneyGained * 1.5);
                     moneyGained = Math.round(moneyGained);
 

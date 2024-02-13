@@ -50,8 +50,14 @@ export const HomePage = () => {
         else navigate('/bemvindo');
     }
 
+    console.log('user', user);
+
     const setEnemy = async () => {
-        const pokemon = await getPokemon();
+        const bigPokemonByLevel = user.pokemons?.reduce((prev, next) => {
+            if (prev.level > next.level) return prev;
+            return next;
+        })?.level || 0;
+        const pokemon = await getPokemon({ level: bigPokemonByLevel ? getRandomIntFromInterval(0, (bigPokemonByLevel + 5)) : 0 });
 
         dispatch(setPokemonEnemy(pokemon));
         dispatch(blockActions(false));
