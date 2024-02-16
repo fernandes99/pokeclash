@@ -57,7 +57,7 @@ export const getPokemon = async (props?: GetPokemonPropsType) => {
     if (!props) props = {};
 
     const { name, level, id, customMoveLevel } = props;
-    const filter = pokemonsBase.filter((item: any) => (item.pokedex_id >= 649 && item.capture_rate >= 100));
+    const filter = pokemonsBase.filter((item: any) => (item.pokedex_id <= 649 && item.capture_rate >= 100));
     const random = getRandomIntFromInterval(0, filter.length);
 
     let base = await requests.get.pokemon(name ? name : '', filter[random].pokedex_id);
